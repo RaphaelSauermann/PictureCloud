@@ -1,11 +1,15 @@
 <?php
-function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitute, $latitude)
+function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
 {
     $db = connectDB();
 
-    $stmt = $db->prepare("INSERT INTO bild (name, owner, pfad, aufnahmeDatum, isPublic, longitute, latitude) VALUES (?,?,?,?,?,?,?)");
-    $stmt->bind_param("sissidd", $name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitute, $latitude);
-
+    if(!$stmt = $db->prepare("INSERT INTO bild (name, owner, pfad, aufnahmeDatum, isPublic, longitude, latitude) VALUES (?,?,?,?,?,?,?)")){
+      echo "konnte statement nicht preparen";
+    }
+    if($stmt->bind_param("sissidd", $name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)){
+      echo "hab binden";
+    }
+    // $stmt->bind_param("sissidd", "Name", 1, "pics/irgendwas", "2020-05-20", 1, 123, 421);
     // $name = filter_input(INPUT_POST, "name");
     // $owner = filter_input(INPUT_POST, "owner");
     // $pfad = filter_input(INPUT_POST, "pfad");
@@ -15,7 +19,11 @@ function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitute,
     // $longitute = filter_input(INPUT_POST, "longitute");
     // $latitude = filter_input(INPUT_POST, "latitude");
 
-    $success = $stmt->execute();
+    if($stmt->execute()){
+      $success = 1;
+    }else {
+      $success = 0;
+    }
     $stmt->close();
     $db->close();
     return $success;
