@@ -1,6 +1,6 @@
 <?php
 
-class Patient {
+class User {
 
     private $uid;
     private $username;
