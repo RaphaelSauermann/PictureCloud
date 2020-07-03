@@ -18,3 +18,10 @@ Whopwhop - WEB-Projekt
 
 
 Branch-Bildverwaltung
+
+
+# SessionWerte:
+
+- nutzername
+- uid
+- loginStatus

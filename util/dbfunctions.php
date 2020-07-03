@@ -1,6 +1,7 @@
 <?php
 
 include 'config/dbaccess.php';
+include 'util/dbBildFunctions.php';
 
 /**
  * SQL INSERT
