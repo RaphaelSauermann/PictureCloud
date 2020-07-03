@@ -1,8 +1,10 @@
 <?php
 
+include 'config/dbaccess.php';
+
 /**
  * SQL INSERT
- * 
+ *
  * prepare(): defines the statement
  * bind_param(): defines datatypes:  i - integer; d - double; s - string; b - BLOB
  * execute(): executes statement
@@ -35,22 +37,7 @@ switch (true) {
         break;
 }
 
-function connectDB() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "123abc123";
-    $dbname = "picturecloud";
 
-    // connection with Database
-    $db = new mysqli($servername, $username, $password, $dbname);
-
-    // check connection
-    if ($db->connect_error) {
-        die("Connection failed: " . $db->connect_error);
-    }
-
-    return $db;
-}
 
 function newBild() {
     $db = connectDB();
