@@ -75,18 +75,18 @@ if (isset($_FILES["fileToUpload"])) {
 
                 $addedToDB = addPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitute, $picLatitude);
                 // $addedToDB = addPicture("Name", 1, "pics", "2020-05-20", 1, 0, 0);
-                echo "<br>".$addedToDB;
-                echo "<table>";
-                foreach ($_POST as $key => $value) {
-                    $css = "style = \"\"";
-                    // Search
-
-                    echo "<tr>
-                      <td $css>$key:</td>
-                      <td $css>$value</td>
-                      </tr>";
-                }
-                echo "</table>";
+                echo "<br> bildId:".$addedToDB;
+                // echo "<table>";
+                // foreach ($_POST as $key => $value) {
+                //     $css = "style = \"\"";
+                //     // Search
+                //
+                //     echo "<tr>
+                //       <td $css>$key:</td>
+                //       <td $css>$value</td>
+                //       </tr>";
+                // }
+                // echo "</table>";
             }
 
             // $name = $_FILES["fileToUpload"]["tmp_name"];

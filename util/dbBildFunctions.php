@@ -17,43 +17,41 @@ function prepared_select($mysqli, $sql, $params = [], $types = "")
 
 function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
 {
+    /* db init */
     $db = connectDB();
+    /* setting params */
+    $params[0] = $name;
+    $params[1] = $owner;
+    $params[2] = $pfad;
+    $params[3] = $aufnahmeDatum;
+    $params[4] = $isPublic;
+    $params[5] = $longitude;
+    $params[6] = $latitude;
+    /* insert into DB */
+    echo "bin da!)";
+    $stmt = prepared_query($db, "INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
+    echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    /* get id for Tag by Name */
+    // $tagID = prepared_select($db, "SELECT * FROM bild WHERE name = ?", $params, $types)->fetch_assoc();
+    $id = $stmt->insert_id;
 
-    if (!$stmt = $db->prepare("INSERT INTO bild (name, owner, pfad, aufnahmeDatum, isPublic, longitude, latitude) VALUES (?,?,?,?,?,?,?)")) {
-        echo "konnte statement nicht preparen";
-    }
-    if ($stmt->bind_param("sissidd", $name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)) {
-        echo "hab binden";
-    }
-    // $stmt->bind_param("sissidd", "Name", 1, "pics/irgendwas", "2020-05-20", 1, 123, 421);
-    // $name = filter_input(INPUT_POST, "name");
-    // $owner = filter_input(INPUT_POST, "owner");
-    // $pfad = filter_input(INPUT_POST, "pfad");
-    // $aufnahmeDatum = filter_input(INPUT_POST, "aufnahmeDatum");
-    // // $uploadDatum; done by Database
-    // $isPublic = filter_input(INPUT_POST, "isPublic");
-    // $longitute = filter_input(INPUT_POST, "longitute");
-    // $latitude = filter_input(INPUT_POST, "latitude");
-
-    if ($stmt->execute()) {
-        $success = 1;
-    } else {
-        $success = 0;
-    }
     $stmt->close();
     $db->close();
-    return $success;
+    return $id;
 }
 
 function addTag($tagName)
 {
+    /* db init */
     $db = connectDB();
+    /* setting params */
     $params[0] = $tagName;
     /* insert into DB */
     $stmt = prepared_query($db, "INSERT INTO tag(name) VALUES (?)", $params, $types = "s");
     /* get id for Tag by Name */
-    $tagID = prepared_select($db, "SELECT * FROM tag WHERE name = ?", $params, $types)->fetch_assoc();
+    // $tagID = prepared_select($db, "SELECT * FROM tag WHERE name = ?", $params, $types)->fetch_assoc();
+    $id = $stmt->insert_id;
     $stmt->close();
     $db->close();
-    return $tagID['tid'];
+    return $id;
 }

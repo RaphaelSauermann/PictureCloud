@@ -21,8 +21,8 @@
     <?php
       // include 'config/fileLocations.php';
       include 'util/include.php';
-      // include 'inc/uploadPicture.php';
-      include 'inc/addTag.php';
+      include 'inc/uploadPicture.php';
+      // include 'inc/addTag.php';
 
      ?>
   </body>
