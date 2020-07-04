@@ -1,29 +1,45 @@
 <?php
 
-class Tag {
-
+class Tag
+{
     private $tid;
     private $name;
 
-    function __construct($tid, $name) {
-        $this->tid = $tid;
+    // function __construct($tid, $name) {
+    //     $this->tid = $tid;
+    //     $this->name = $name;
+    // }
+
+    public function __construct($name)
+    {
+        // $this->tid = $tid;
         $this->name = $name;
+        $this->addToDB();
     }
 
-    function getTid() {
+    /* returns ID from DB */
+    public function addToDB()
+    {
+        return addTag($this->name);
+    }
+
+    public function getTid()
+    {
         return $this->tid;
     }
 
-    function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    function setTid($tid): void {
+    public function setTid($tid): void
+    {
         $this->tid = $tid;
     }
 
-    function setName($name): void {
+    public function setName($name): void
+    {
         $this->name = $name;
     }
-
 }
