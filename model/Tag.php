@@ -14,7 +14,9 @@ class Tag
     {
         // $this->tid = $tid;
         $this->name = $name;
-        $this->addToDB();
+        if($this->tid = $this->addToDB()){
+          echo "added to DB: ".$this->tid;
+        }
     }
 
     /* returns ID from DB */

@@ -20,12 +20,9 @@
 </form>
 
 <?php
-
 if (isset($_POST["tagName"])) {
     if ($_POST["tagName"]!=null) {
         $newTag = new Tag($_POST["tagName"]);
     }
 }
-
-
  ?>

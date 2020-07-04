@@ -1,4 +1,20 @@
 <?php
+function prepared_query($mysqli, $sql, $params, $types = "")
+{
+    $types = $types ?: str_repeat("s", count($params));
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    return $stmt;
+}
+
+function prepared_select($mysqli, $sql, $params = [], $types = "")
+{
+    return prepared_query($mysqli, $sql, $params, $types)->get_result();
+}
+
+
+
 function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
 {
     $db = connectDB();
@@ -32,22 +48,12 @@ function addPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude,
 function addTag($tagName)
 {
     $db = connectDB();
-
-    /* Prepared statement, stage 1: prepare */
-    if (!($stmt = $db->prepare("INSERT INTO tag(name) VALUES (?)"))) {
-        echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-    }
-
-    /* Prepared statement, stage 2: bind and execute */
-    // $id = 1;
-    if (!$stmt->bind_param("s", $tagName)) {
-        echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-
-    if (!$stmt->execute()) {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
+    $params[0] = $tagName;
+    /* insert into DB */
+    $stmt = prepared_query($db, "INSERT INTO tag(name) VALUES (?)", $params, $types = "s");
+    /* get id for Tag by Name */
+    $tagID = prepared_select($db, "SELECT * FROM tag WHERE name = ?", $params, $types)->fetch_assoc();
     $stmt->close();
     $db->close();
-    return TRUE;
+    return $tagID['tid'];
 }
