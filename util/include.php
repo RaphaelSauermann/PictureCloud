@@ -9,3 +9,4 @@ include 'util/dbBildFunctions.php';
 
 /* models last */
 include 'model/Tag.php';
+include 'model/Bild.php';

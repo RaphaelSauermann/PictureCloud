@@ -31,7 +31,7 @@
         <td><input type="text" name="picLat" id="picLat" placeholder="48.136767"></td>
       </tr>
       <tr>
-        <td><label for="picLong">Longitute (optional):</label></td>
+        <td><label for="picLong">longitude (optional):</label></td>
         <td><input type="text" name="picLong" id="picLong" placeholder="16.323815"></td>
       </tr>
       <tr>
@@ -43,7 +43,7 @@
 </form>
 
 <?php
-$target_dir = $pathToPics."/misc/";
+$target_dir = $pathToPics."/misc";
 if (isset($_FILES["fileToUpload"])) {
     $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
     if (!is_dir($target_dir)) {
@@ -54,6 +54,7 @@ if (isset($_FILES["fileToUpload"])) {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "Datei wurde erfolgreich hochgeladen!";
             // Upload war erfolgreich!
+
             /* Auswertung der Input-Felder */
             if (isset($_POST)) {
                 $picName = $_POST["picName"];
@@ -66,39 +67,17 @@ if (isset($_FILES["fileToUpload"])) {
                 } else {
                     $picIsPublic = 0;
                 }
-                $picLongitute = $_POST["picLong"];
+                $picLongitude = $_POST["picLong"];
                 $picLatitude = $_POST["picLat"];
                 if (($_POST["picName"] == null)) {
                     //check if name is set if not set it to filename
                     $picName = $_FILES["fileToUpload"]["name"];
                 }
-
-                $addedToDB = addPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitute, $picLatitude);
-                // $addedToDB = addPicture("Name", 1, "pics", "2020-05-20", 1, 0, 0);
-                echo "<br> bildId:".$addedToDB;
-                // echo "<table>";
-                // foreach ($_POST as $key => $value) {
-                //     $css = "style = \"\"";
-                //     // Search
-                //
-                //     echo "<tr>
-                //       <td $css>$key:</td>
-                //       <td $css>$value</td>
-                //       </tr>";
-                // }
-                // echo "</table>";
+                $pic = new Bild($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
+                // $addedToDB = addPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $piclongitude, $picLatitude);
+                echo "<br> bildId:".$pic->getBid();
             }
 
-            // $name = $_FILES["fileToUpload"]["tmp_name"];
-            // $owner = $_SESSION["uid"];
-            // $pfad = $target_file;
-
-            //form auslesen und werte ggf setzen
-
-            //Weiter Verwaltung und erstellung des Bild-Objektes
-            // newBild()
-
-            // neues Bildobjekt?;
         } else {
             echo "Fehler beim Upload!<br>";
             //Fehlerausgabe

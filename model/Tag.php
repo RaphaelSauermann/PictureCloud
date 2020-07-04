@@ -14,15 +14,16 @@ class Tag
     {
         // $this->tid = $tid;
         $this->name = $name;
-        if($this->tid = $this->addToDB()){
-          echo "added to DB: ".$this->tid;
+        if ($this->tid = $this->addToDB()) {
+            echo "added to DB: ".$this->tid;
         }
     }
 
     /* returns ID from DB */
     public function addToDB()
     {
-        return addTag($this->name);
+        $params[0] = $this->name;
+        return addNewEntry("INSERT INTO tag(name) VALUES (?)", $params, $types = "s");
     }
 
     public function getTid()
