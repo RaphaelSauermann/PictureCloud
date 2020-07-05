@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+
+<?php
+session_start();
+if (!isset($_SESSION["loginStatus"])) {
+    $_SESSION["loginStatus"] = FALSE;
+}
+?>
+
+
 <html lang="de" dir="ltr">
   <head>
     <!-- <meta charset="UTF-8">

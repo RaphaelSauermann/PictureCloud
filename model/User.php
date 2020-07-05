@@ -30,6 +30,36 @@ class User {
         $this->isActive = $isActive;
     }
 
+    /*
+      function __construct($username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email) {
+      $this->username = $username;
+      $this->passwort = $passwort;
+      $this->anrede = $anrede;
+      $this->vorname = $vorname;
+      $this->nachname = $nachname;
+      $this->adresse = $adresse;
+      $this->plz = $plz;
+      $this->ort = $ort;
+      $this->email = $email;
+      if ($this->uid = $this->addToDB()) {
+      echo "added to DB: " . $this->uid;
+      }
+      }
+
+      function addToDB() {
+      $params[0] = $this->username;
+      $params[1] = $this->passwort;
+      $params[2] = $this->anrede;
+      $params[3] = $this->vorname;
+      $params[4] = $this->nachname;
+      $params[5] = $this->adresse;
+      $params[6] = $this->plz;
+      $params[7] = $this->ort;
+      $params[8] = $this->email;
+      return addNewEntry("INSERT INTO user (username, passwort, anrede, vorname, nachname, adresse, plz, ort, email) VALUES (?,?,?,?,?,?,?,?,?)", $params, $types = "ssssssiss");
+      }
+     */
+
     function getUid() {
         return $this->uid;
     }
