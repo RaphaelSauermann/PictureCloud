@@ -25,3 +25,4 @@ Branch-Bildverwaltung
 - nutzername
 - uid
 - loginStatus
+- isAdmin
