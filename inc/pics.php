@@ -136,6 +136,8 @@
             </div>
           </div>
         </form>
+        <!-- Spacer -->
+        <hr/>
         <!-- Anzeige alles TAGS -->
         <div class="row">
           <div class="col">
