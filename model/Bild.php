@@ -38,6 +38,10 @@ class Bild
         return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
     }
 
+    public function getHTML(){
+      
+    }
+
     public function getBid()
     {
         return $this->bid;
