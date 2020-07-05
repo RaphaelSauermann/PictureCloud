@@ -64,19 +64,22 @@
 <!-- hauptteil wo bilder sind -->
 <div class="container" id="pics">
   <div class="card" style="width: 40rem;">
+    <!-- thumbnail -->
     <img src="pics/misc/tab.png" class="card-img-top" alt="...">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
       <div class="container">
         <form>
+          <!-- Anzeige der Attribute des Bildes -->
           <div class="row">
             <div class="col">
+              <!-- Bildname -->
               <div class="form-group">
                 <label for="formGroupExampleInput">Bildname</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" value="Sonnenuntergang">
               </div>
             </div>
             <div class="col">
+              <!-- Bildowner -->
               <div class="form-group">
                 <label for="formGroupExampleInput2">Owner</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" value="ich">
@@ -85,12 +88,14 @@
           </div>
           <div class="row">
             <div class="col">
+              <!-- Änderungsdatum -->
               <div class="form-group">
                 <label for="formGroupExampleInput">Änderungsdatum</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" value="2020-05-07">
               </div>
             </div>
             <div class="col">
+              <!-- Aufnahmedatum -->
               <div class="form-group">
                 <label for="formGroupExampleInput2">Aufnahmedatum</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" value="2019-06-18">
@@ -99,18 +104,21 @@
           </div>
           <div class="row">
             <div class="col-sm-3">
+              <!-- Latitude -->
               <div class="form-group">
                 <label for="formGroupExampleInput">Latitude</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" value="52.1517515">
               </div>
             </div>
             <div class="col-sm-3">
+              <!-- Longitude -->
               <div class="form-group">
                 <label for="formGroupExampleInput2">Longitude</label>
                 <input type="text" class="form-control" id="formGroupExampleInput2" value="16.5747846">
               </div>
             </div>
             <div class="col-sm-6">
+              <!-- is Public & update -->
               <div class="form-group">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -119,12 +127,34 @@
                   </label>
                 </div>
               </div>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-
+              <a href="#" class="btn-sm btn-primary">Update felder</a>
             </div>
           </div>
         </form>
+        <!-- Anzeige alles TAGS -->
+        <div class="row">
+          <div class="col">
+            <div class="list-group">
+              <li class="list-group-item disabled" aria-disabled="true">Tags</li>
+              <a href="" class="list-group-item list-group-item-action">Sonnenuntergang</a>
+              <a href="" class="list-group-item list-group-item-action">Meer</a>
+              <a href="" class="list-group-item list-group-item-action">Berge</a>
+            </div>
+          </div>
+        </div>
+        <!-- Hinzufügen von TAGS -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">hinzufügen</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<?php
+
+
+ ?>
