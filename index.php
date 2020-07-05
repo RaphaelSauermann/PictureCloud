@@ -46,8 +46,7 @@
 
       /* includes for html page itself (html elements) */
 
-      include 'inc/menue.php';
-      include 'inc/uploadPicture.php';
+      include 'inc/buildHTML.php';
       // include 'inc/addTag.php';
 
      ?>
