@@ -1,7 +1,7 @@
 <?php
 
-class Bild {
-
+class Bild
+{
     private $bid;
     private $name;
     private $owner; // references User ID
@@ -9,91 +9,122 @@ class Bild {
     private $aufnahmeDatum; // Datum, du dem das Bild aufgenommen wurde
     private $uploadDatum; // Datum der letzten Änderung
     private $isPublic;
-    private $longitute;
+    private $longitude;
     private $latitude;
 
-    function __construct($bid, $name, $owner, $pfad, $aufnahmeDatum, $uploadDatum, $isPublic, $longitute, $latitude) {
-        $this->bid = $bid;
+    public function __construct($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
+    {
         $this->name = $name;
         $this->owner = $owner;
         $this->pfad = $pfad;
         $this->aufnahmeDatum = $aufnahmeDatum;
-        $this->uploadDatum = $uploadDatum;
         $this->isPublic = $isPublic;
-        $this->longitute = $longitute;
+        $this->longitude = $longitude;
         $this->latitude = $latitude;
+        if ($this->bid = $this->addToDB()) {
+            echo "added to DB: ".$this->bid;
+        }
     }
 
-    function getBid() {
+    public function addToDB()
+    {
+        $params[0] = $this->name;
+        $params[1] = $this->owner;
+        $params[2] = $this->pfad;
+        $params[3] = $this->aufnahmeDatum;
+        $params[4] = $this->isPublic;
+        $params[5] = $this->longitude;
+        $params[6] = $this->latitude;
+        return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
+    }
+
+    public function getBid()
+    {
         return $this->bid;
     }
 
-    function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    function getOwner() {
+    public function getOwner()
+    {
         return $this->owner;
     }
 
-    function getPfad() {
+    public function getPfad()
+    {
         return $this->pfad;
     }
 
-    function getAufnahmeDatum() {
+    public function getAufnahmeDatum()
+    {
         return $this->aufnahmeDatum;
     }
 
-    function getUploadDatum() {
+    public function getUploadDatum()
+    {
         return $this->uploadDatum;
     }
 
-    function getIsPublic() {
+    public function getIsPublic()
+    {
         return $this->isPublic;
     }
 
-    function getLongitute() {
-        return $this->longitute;
+    public function getlongitude()
+    {
+        return $this->longitude;
     }
 
-    function getLatitude() {
+    public function getLatitude()
+    {
         return $this->latitude;
     }
 
-    function setBid($bid): void {
+    public function setBid($bid): void
+    {
         $this->bid = $bid;
     }
 
-    function setName($name): void {
+    public function setName($name): void
+    {
         $this->name = $name;
     }
 
-    function setOwner($owner): void {
+    public function setOwner($owner): void
+    {
         $this->owner = $owner;
     }
 
-    function setPfad($pfad): void {
+    public function setPfad($pfad): void
+    {
         $this->pfad = $pfad;
     }
 
-    function setAufnahmeDatum($aufnahmeDatum): void {
+    public function setAufnahmeDatum($aufnahmeDatum): void
+    {
         $this->aufnahmeDatum = $aufnahmeDatum;
     }
 
-    function setUploadDatum($uploadDatum): void {
+    public function setUploadDatum($uploadDatum): void
+    {
         $this->uploadDatum = $uploadDatum;
     }
 
-    function setIsPublic($isPublic): void {
+    public function setIsPublic($isPublic): void
+    {
         $this->isPublic = $isPublic;
     }
 
-    function setLongitute($longitute): void {
-        $this->longitute = $longitute;
+    public function setlongitude($longitude): void
+    {
+        $this->longitude = $longitude;
     }
 
-    function setLatitude($latitude): void {
+    public function setLatitude($latitude): void
+    {
         $this->latitude = $latitude;
     }
-
 }

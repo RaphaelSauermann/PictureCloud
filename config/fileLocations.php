@@ -1,0 +1,3 @@
+<?php
+$pathToPics = "pics";
+?>

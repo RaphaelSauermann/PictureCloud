@@ -1,6 +1,6 @@
 <?php
 
-include 'config/dbaccess.php';
+
 
 /**
  * SQL INSERT

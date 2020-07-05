@@ -15,3 +15,13 @@ Whopwhop - WEB-Projekt
 - pics
   - user Accounts (nach id)
   - misc //Photos ohne Nutzer
+
+
+Branch-Bildverwaltung
+
+
+# SessionWerte:
+
+- nutzername
+- uid
+- loginStatus

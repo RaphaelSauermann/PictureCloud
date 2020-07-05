@@ -1,8 +1,8 @@
-<?php 
+<?php
 function connectDB() {
     $servername = "localhost";
-    $username = "root";
-    $password = "123abc123";
+    $username = "pictureCloudUser";
+    $password = "SIl8K6rUevv0NJab";
     $dbname = "picturecloud";
 
     // connection with Database
