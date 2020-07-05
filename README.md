@@ -25,3 +25,6 @@ Branch-Bildverwaltung
 - nutzername
 - uid
 - loginStatus
+
+
+Branch-Userfunctions
