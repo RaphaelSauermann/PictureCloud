@@ -67,7 +67,12 @@
     <!-- thumbnail -->
     <img src="pics/misc/tab.png" class="card-img-top" alt="...">
     <div class="card-body">
-      <div class="container">
+      <!-- Button zum aufklappen -->
+      <a class="btn btn-outline-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+        +/- Zusatzinfos
+      </a>
+      <!-- aufklappbare zusatzinfos -->
+      <div class="container collapse show" id="collapseExample">
         <form>
           <!-- Anzeige der Attribute des Bildes -->
           <div class="row">
