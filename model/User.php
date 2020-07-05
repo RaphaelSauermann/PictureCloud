@@ -15,6 +15,7 @@ class User {
     private $isAdmin;
     private $isActive;
 
+    /*
     function __construct($uid, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, $isAdmin, $isActive) {
         $this->uid = $uid;
         $this->username = $username;
@@ -29,8 +30,7 @@ class User {
         $this->isAdmin = $isAdmin;
         $this->isActive = $isActive;
     }
-
-    /*
+    */
       function __construct($username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email) {
       $this->username = $username;
       $this->passwort = $passwort;
@@ -58,7 +58,6 @@ class User {
       $params[8] = $this->email;
       return addNewEntry("INSERT INTO user (username, passwort, anrede, vorname, nachname, adresse, plz, ort, email) VALUES (?,?,?,?,?,?,?,?,?)", $params, $types = "ssssssiss");
       }
-     */
 
     function getUid() {
         return $this->uid;
