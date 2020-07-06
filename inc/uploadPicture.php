@@ -73,9 +73,9 @@ if (isset($_FILES["fileToUpload"])) {
                     //check if name is set if not set it to filename
                     $picName = $_FILES["fileToUpload"]["name"];
                 }
-                $pic = new Bild($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
+                $picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
                 // $addedToDB = addPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $piclongitude, $picLatitude);
-                echo "<br> bildId:".$pic->getBid();
+                // echo "<br> bildId:".$pic->getBid();
             }
 
         } else {

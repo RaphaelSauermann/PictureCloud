@@ -32,3 +32,16 @@ function addNewEntry($sql, $params, $types = "")
     $db->close();
     return $id;
 }
+
+/* adds a new Picture to DB and returns the generated ID from that picture */
+function addNewPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
+{
+    $params[0] = $name;
+    $params[1] = $owner;
+    $params[2] = $pfad;
+    $params[3] = $aufnahmeDatum;
+    $params[4] = $isPublic;
+    $params[5] = $longitude;
+    $params[6] = $latitude;
+    return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
+}

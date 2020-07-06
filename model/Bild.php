@@ -12,8 +12,9 @@ class Bild
     private $longitude;
     private $latitude;
 
-    public function __construct($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
+    public function __construct($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude, $bid)
     {
+        $this->bid = $bid;
         $this->name = $name;
         $this->owner = $owner;
         $this->pfad = $pfad;
@@ -21,22 +22,22 @@ class Bild
         $this->isPublic = $isPublic;
         $this->longitude = $longitude;
         $this->latitude = $latitude;
-        if ($this->bid = $this->addToDB()) {
-            echo "added to DB: ".$this->bid;
-        }
+        // if ($this->bid = $this->addToDB()) {
+        //     echo "added to DB: ".$this->bid;
+        // }
     }
 
-    public function addToDB()
-    {
-        $params[0] = $this->name;
-        $params[1] = $this->owner;
-        $params[2] = $this->pfad;
-        $params[3] = $this->aufnahmeDatum;
-        $params[4] = $this->isPublic;
-        $params[5] = $this->longitude;
-        $params[6] = $this->latitude;
-        return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
-    }
+    // public function addToDB()
+    // {
+    //     $params[0] = $this->name;
+    //     $params[1] = $this->owner;
+    //     $params[2] = $this->pfad;
+    //     $params[3] = $this->aufnahmeDatum;
+    //     $params[4] = $this->isPublic;
+    //     $params[5] = $this->longitude;
+    //     $params[6] = $this->latitude;
+    //     return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
+    // }
 
     public function getHTML($userStatus)
     {
