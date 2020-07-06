@@ -12,7 +12,7 @@ class Bild
     private $longitude;
     private $latitude;
 
-    public function __construct($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude, $bid)
+    public function __construct($bid, $name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
     {
         $this->bid = $bid;
         $this->name = $name;

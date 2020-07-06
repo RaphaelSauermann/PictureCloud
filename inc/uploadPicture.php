@@ -76,6 +76,8 @@ if (isset($_FILES["fileToUpload"])) {
                 $picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
                 // $addedToDB = addPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $piclongitude, $picLatitude);
                 // echo "<br> bildId:".$pic->getBid();
+                // $pic = new Bild($picId, $picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
+                // var_dump($pic);
             }
 
         } else {
