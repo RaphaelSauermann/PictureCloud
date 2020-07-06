@@ -1,3 +1,9 @@
+<?php
+/* Get all*/
+
+
+ ?>
+
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->
 <div class="container">
@@ -133,6 +139,7 @@
                 </div>
               </div>
               <a href="#" class="btn-sm btn-primary">Update felder</a>
+              <a href="#" class="btn-sm btn-danger">Bild löschen</a>
             </div>
           </div>
         </form>
@@ -152,6 +159,26 @@
         <!-- Hinzufügen von TAGS -->
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">hinzufügen</button>
+          </div>
+        </div>
+        <!-- Spacer -->
+        <hr/>
+        <!-- Anzeige der Freigaben -->
+        <div class="row">
+          <div class="col">
+            <div class="list-group">
+              <li class="list-group-item disabled" aria-disabled="true">Freigaben</li>
+              <a href="" class="list-group-item list-group-item-action">user1</a>
+              <a href="" class="list-group-item list-group-item-action">user43</a>
+              <a href="" class="list-group-item list-group-item-action">bananebrot</a>
+            </div>
+          </div>
+        </div>
+        <!-- Hinzufügen von TAGS -->
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="neue Freigabe" aria-label="neuer Tag" aria-describedby="button-addon">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" id="searchButton">hinzufügen</button>
           </div>
