@@ -28,8 +28,6 @@ if (isset($_GET['page'])) {
         case "logout":
             if ($_SESSION["loginStatus"] === TRUE) {
                 include 'inc/logout.php';
-            } else {
-                echo "disable this button when not logged in";
             }
             // $buttonId = "buttonHome";
             break;

@@ -1,48 +1,37 @@
 <div class="container">
     <?php
+    // these variables help to display messages at certain points
     $loginErr = FALSE;
     $userExistsErr = FALSE;
     $pwRegisterErr = FALSE;
+    $registerSuccess = FALSE;
 
-    // check credentials for login
+    // LOGIN: check credentials for login
     if (null !== (filter_input(INPUT_POST, "anmelden"))) {
         // Calls SELECT on users to check password
-        if (!userLogin(filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "password"))) {
+        if (userLogin(filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "password"))) {
+            //reload page to have session set to TRUE
+            header("Location: index.php?page=account");
+        } else {
             $loginErr = TRUE;
         }
     }
 
-    // register user if not already exists
+    // REGISTER: check if passwords match and username already exists
     if (null !== (filter_input(INPUT_POST, "registrieren"))) {
         if (filter_input(INPUT_POST, "password") !== filter_input(INPUT_POST, "password2")) {
             $pwRegisterErr = TRUE;
         } elseif (userExists(filter_input(INPUT_POST, "username"))) {
             $userExistsErr = TRUE;
         } else {
-            userRegister();
+            $registerSuccess = userRegister();
         }
     }
 
-
     if ($_SESSION["loginStatus"] === TRUE) {
-        echo "<h3> angemeldet </h3>";
-        // include user page
+        include "inc/userpage.php";
     } else {
-        include 'inc/login.php';
-
-        if ($loginErr) {
-            echo "Benutzername und Passwort stimmen nicht überein, überprüfen Sie ihre Eingabe.";
-        }
-
-
-        include 'inc/register.php';
-
-        if ($pwRegisterErr) {
-            echo "Die eingegebenen Passwörter stimmen nicht überein.";
-        }
-        if ($userExistsErr) {
-            echo "Username '" . filter_input(INPUT_POST, "username") . "' ist bereits vergeben.";
-        }
+        include "inc/login_register.php";
     }
     ?>
 </div>

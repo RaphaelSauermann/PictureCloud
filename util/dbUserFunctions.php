@@ -12,8 +12,8 @@ function userLogin($username, $passwort) {
         // bekommt alle zutreffenden rows, username ist unique also kann nur max. eine row geliefert werden
         $stmt->fetch();
 
-        // stimmt das eingegebene PW und das in der DB überein, wird die Session auf angemeldet gesetzt.
-        if ($passwort === $db_passwort) {
+        // das eingegebene PW wird mit dem Hashed PW in der DB überprüft, stimmt es überein, wird die Session auf angemeldet gesetzt.
+        if (password_verify($passwort, $db_passwort)) {
             $valid = TRUE;
             $_SESSION['uid'] = $db_uid;
             $_SESSION['username'] = $db_username;
@@ -30,7 +30,7 @@ function userLogin($username, $passwort) {
 
 function userRegister() {
     $username = filter_input(INPUT_POST, "username");
-    $passwort = filter_input(INPUT_POST, "password");
+    $passwort = password_hash(filter_input(INPUT_POST, "password"), PASSWORD_DEFAULT); // Hashes PW
     $anrede = filter_input(INPUT_POST, "anrede");
     $vorname = filter_input(INPUT_POST, "vorname");
     $nachname = filter_input(INPUT_POST, "nachname");
@@ -39,7 +39,9 @@ function userRegister() {
     $ort = filter_input(INPUT_POST, "ort");
     $email = filter_input(INPUT_POST, "email");
 
-    new User($username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email);
+    // null values are managed by Database, Object is only used to insert
+    $registerUser = new User(null, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, null, null);
+    return $registerUser->addToDB();
 }
 
 function userExists($username) {
@@ -60,4 +62,20 @@ function userExists($username) {
     $stmt->close();
     $db->close();
     return $exists;
+}
+
+// gets a User from DB to display information
+function getUserById($userId) {
+    $db = connectDB();
+
+    if (($stmt = $db->prepare("SELECT uid, username, passwort, anrede, vorname, nachname, adresse, plz, ort, email, isAdmin, isActive FROM user WHERE uid = ?"))) {
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->bind_result($uid, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, $isAdmin, $isActive);
+        $stmt->fetch();
+        $userObject = new User($uid, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, $isAdmin, $isActive);
+    }
+    $stmt->close();
+    $db->close();
+    return $userObject;
 }
