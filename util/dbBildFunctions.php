@@ -1,4 +1,5 @@
 <?php
+// https://phpdelusions.net/mysqli/simple
 function prepared_query($mysqli, $sql, $params, $types = "")
 {
     $types = $types ?: str_repeat("s", count($params));
@@ -44,4 +45,19 @@ function addNewPicture($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitu
     $params[5] = $longitude;
     $params[6] = $latitude;
     return addNewEntry("INSERT INTO bild(name,owner,pfad,aufnahmeDatum,isPublic,longitude,latitude) VALUES (?,?,?,?,?,?,?)", $params, $types = "sissidd");
+}
+
+/* Get Pictures*/
+function getPictures()
+{
+    /* db init */
+    $db = connectDB();
+    $sql = "SELECT * FROM bild WHERE bid > ?";
+    $res = prepared_query($db, $sql, [1])->get_result();
+    $pictures = [];
+    while ($row = $res->fetch_assoc()) {
+        $newPic = new Bild($row['bid'], $row['name'], $row['owner'], $row['pfad'], $row['aufnahmeDatum'], $row['isPublic'], $row['longitude'], $row['latitude']);
+        array_push($pictures, $newPic);
+    }
+    return $pictures;
 }

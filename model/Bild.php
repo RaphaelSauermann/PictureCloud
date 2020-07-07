@@ -41,7 +41,7 @@ class Bild
 
     public function getHTML($userStatus)
     {
-      // echo code for generation of bildanzeige
+      echo $this->bid;
     }
 
     public function getBid()

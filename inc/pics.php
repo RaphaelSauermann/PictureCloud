@@ -61,6 +61,13 @@ foreach ($listOfSorters as $key => $value) {
     }
 }
 
+$pictures = getPictures();
+
+foreach ($pictures as $key => $value) {
+  $value->getHTML("fine");
+  echo "<br>";
+}
+
  ?>
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->
