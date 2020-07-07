@@ -5,6 +5,7 @@ include 'config/dbaccess.php';
 
 /* utils then */
 include 'util/dbBildFunctions.php';
+include 'util/helper.php';
 
 
 /* models last */

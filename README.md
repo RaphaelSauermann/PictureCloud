@@ -26,3 +26,4 @@ Branch-Bildverwaltung
 - uid
 - loginStatus
 - isAdmin
+- showPicturesData
