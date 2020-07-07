@@ -9,7 +9,6 @@ if (!isset($_SESSION["showPicturesData"])) {
     $_SESSION["showPicturesData"] = $filterData;
 }
 
-
 /* get all freigabe Choosen */
 if (isset($_GET["clearence"])) {
     // toggle the selected freigabestufe in the session array
@@ -28,9 +27,39 @@ if (isset($_GET["addTagInput"])) {
     if (!in_array($_GET["addTagInput"], $_SESSION["showPicturesData"]["tags"], true)) {
         array_push($_SESSION["showPicturesData"]["tags"], $_GET["addTagInput"]);
     }
-    // var_dump($_SESSION["showPicturesData"]["tags"]);
 }
 /* get search input */
+// TODO:
+
+/* Delete Tag if it is clicked */
+if (isset($_GET["deleteSearchTag"])) {
+    if (($key = array_search($_GET["deleteSearchTag"], $_SESSION["showPicturesData"]["tags"])) !== false) {
+        unset($_SESSION["showPicturesData"]["tags"][$key]);
+    }
+}
+
+/* set list for the active parts of filter */
+$activeParts = [];
+
+/* Setting for freigabefilterung */
+$listOfFilters = ["own","open","public"];
+foreach ($listOfFilters as $key => $value) {
+    if (in_array($value, $_SESSION["showPicturesData"]["freigabeFilterung"], true)) {
+        $activeParts[$value] = "active";
+    } else {
+        $activeParts[$value] = "";
+    }
+}
+
+/* Setting for sortierung */
+$listOfSorters = ["name","owner","changeDate","takenDate","lat","long"];
+foreach ($listOfSorters as $key => $value) {
+    if ($value == $_SESSION["showPicturesData"]["sortBy"]) {
+        $activeParts[$value] = "active";
+    } else {
+        $activeParts[$value] = "";
+    }
+}
 
  ?>
 <h2>Bilder anschauen</h2>
@@ -45,9 +74,9 @@ if (isset($_GET["addTagInput"])) {
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="index.php?page=pics&clearence=own">nur eigene </a>
-          <a class="dropdown-item" href="index.php?page=pics&clearence=open">für mich freigegeben</a>
-          <a class="dropdown-item" href="index.php?page=pics&clearence=public">alle Public</a>
+          <a class="dropdown-item <?php echo $activeParts["own"]; ?>" href="index.php?page=pics&clearence=own">nur eigene </a>
+          <a class="dropdown-item <?php echo $activeParts["open"]; ?>" href="index.php?page=pics&clearence=open">für mich freigegeben</a>
+          <a class="dropdown-item <?php echo $activeParts["public"]; ?>" href="index.php?page=pics&clearence=public">alle Public</a>
         </div>
       </div>
     </div>
@@ -59,12 +88,12 @@ if (isset($_GET["addTagInput"])) {
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=name">Bildname </a>
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=owner">Owner</a>
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=changeDate">Änderungsdatum</a>
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=takenDate">Aufnahmedatum</a>
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=lat">Latitude</a>
-          <a class="dropdown-item" href="index.php?page=pics&sortBy=long">Longitude</a>
+          <a class="dropdown-item <?php echo $activeParts["name"]; ?>" href="index.php?page=pics&sortBy=name">Bildname </a>
+          <a class="dropdown-item <?php echo $activeParts["owner"]; ?>" href="index.php?page=pics&sortBy=owner">Owner</a>
+          <a class="dropdown-item <?php echo $activeParts["changeDate"]; ?>" href="index.php?page=pics&sortBy=changeDate">Änderungsdatum</a>
+          <a class="dropdown-item <?php echo $activeParts["takenDate"]; ?>" href="index.php?page=pics&sortBy=takenDate">Aufnahmedatum</a>
+          <a class="dropdown-item <?php echo $activeParts["lat"]; ?>" href="index.php?page=pics&sortBy=lat">Latitude</a>
+          <a class="dropdown-item <?php echo $activeParts["long"]; ?>" href="index.php?page=pics&sortBy=long">Longitude</a>
         </div>
       </div>
     </div>
@@ -79,17 +108,17 @@ if (isset($_GET["addTagInput"])) {
           <input type="text" class="form-control" name="addTagInput" id="addTagInput" placeholder="tag suchen" aria-label="tag suchen" aria-describedby="button-addon2">
           <div class="input-group-append">
             <!-- <button class="btn btn-outline-secondary" type="submit" id="addTagButton">adden</button> -->
-            <input type="submit" class="btn btn-outline-secondary" value="tag hinzufügen" />
+            <input type="submit" class="btn btn-outline-secondary" value="nach tag suchen" />
           </div>
 
           <div class="input-group-append">
             <button class="btn btn-outline-secondary dropdown-toggle" id="searchTagsDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">tags</button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div role="separator" class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
+              <?php
+                foreach ($_SESSION["showPicturesData"]["tags"] as $key => $value) {
+                    print "<a class=\"dropdown-item\" href=\"index.php?page=pics&deleteSearchTag=".$value."\">".$value."</a>";
+                }
+               ?>
             </div>
           </div>
 
