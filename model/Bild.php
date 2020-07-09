@@ -53,6 +53,8 @@ class Bild
           $checkboxChecked = "";
         }
 
+
+
         // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
         echo '<div class="container" id="bild'.$this->bid.'">';
         echo '<div class="card" style="width: 1/3%;">';
@@ -142,7 +144,7 @@ class Bild
         echo '<li class="list-group-item disabled" aria-disabled="true">Tags</li>';
         foreach ($zusatzInfos["tags"] as $key => $value) {
             // print for all tags
-            echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
+            echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action '.$visability["checkbox"].'">'.$value.'</a>';
         }
         // echo '<a href="" class="list-group-item list-group-item-action">Meer</a>';
         // echo '<a href="" class="list-group-item list-group-item-action">Berge</a>';
@@ -175,7 +177,7 @@ class Bild
         foreach ($zusatzInfos["freigabenNames"] as $key => $value) {
             // print for all tags
             // echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">Sonnenuntergang</a>';
-            echo '<a href="index.php?page=pics&deleteUser='.$zusatzInfos["freigabenUids"][$key].'&delteUserBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
+            echo '<a href="index.php?page=pics&deleteUser='.$zusatzInfos["freigabenUids"][$key].'&delteUserBild='.$this->bid.'" class="list-group-item list-group-item-action '.$visability["checkbox"].'">'.$value.'</a>';
         }
 
         // echo '<a href="" class="list-group-item list-group-item-action">user43</a>';
