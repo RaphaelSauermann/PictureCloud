@@ -65,6 +65,27 @@ foreach ($listOfSorters as $key => $value) {
 /* the picture changing functions */
 /* ############################## */
 
+/* Tags */
+// add Tags
+if (array_key_exists("newTag", $_POST)) {
+    addTagOnBild($_POST["bid"], $_POST["newTag"]);
+}
+// remove Tags
+if (array_key_exists("deleteTagTag", $_GET)) {
+    deleteTagOnBild($_GET["delteTagBild"], $_GET["deleteTagTag"]);
+}
+
+/* Freigaben */
+// add Freigabe
+
+// if (array_key_exists("newPublic", $_POST)) {
+//     addTagOnBild($_POST["bid"], $_POST["newPublic"]);
+// }
+// // remove Freigabe
+// if (array_key_exists("deleteUser", $_GET)) {
+//     deleteTagOnBild($_GET["delteUserBild"], $_GET["deleteUser"]);
+// }
+
 ?>
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->
@@ -154,14 +175,14 @@ $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SE
 $i = 0;
 echo '<div class="row">';
 foreach ($pictures as $key => $value) {
-  echo '<div class="col">';
-  $value->getHTML();
-  // echo "<br>";
-  echo "</div>";
-  if(++$i%3==0){
+    echo '<div class="col">';
+    $value->getHTML();
+    // echo "<br>";
     echo "</div>";
-    echo '<div class="row">';
-  }
+    if (++$i%3==0) {
+        echo "</div>";
+        echo '<div class="row">';
+    }
 }
 echo "</div>";
 
