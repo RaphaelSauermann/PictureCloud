@@ -145,15 +145,6 @@ foreach ($listOfSorters as $key => $value) {
 
 <?php
 /* Print all the pictures in the order they got delivered from the db */
-
-
-/* checking the freigabe filterungen */
-/* check eigene */
-/* check for you freigegeben */
-/* check public */
-
-/* check sort by */
-
 /* list of tags that get filtered by */
 
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
@@ -161,7 +152,7 @@ $i = 0;
 echo '<div class="row">';
 foreach ($pictures as $key => $value) {
   echo '<div class="col">';
-  $value->getHTML("fine");
+  $value->getHTML();
   // echo "<br>";
   echo "</div>";
   if(++$i%3==0){

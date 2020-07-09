@@ -117,8 +117,8 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
             }
         }
     }
-    if(!empty($tagQueryPart)){
-      $sql .= "AND ".$tagQueryPart;
+    if (!empty($tagQueryPart)) {
+        $sql .= "AND ".$tagQueryPart;
     }
 
 
@@ -139,6 +139,9 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         // array_push($pictures, $newPic);
         $pictures[$newPic->getBid()] = $newPic;
     }
+    /* Closing Connection */
+    $db->close();
+
     return $pictures;
 }
 
@@ -148,12 +151,62 @@ UpdateDatum
 Tags
 Freigaben
 */
-function getBildAdditonalInformation($bid)
+function getBildAdditonalInformation($bild)
 {
-    $werte["ownerName"] = "Testname";
-    $werte["uploadDatum"] = "2020-05-05";
-    $werte["tags"] = ["Sonne","Mond","Sterne"];
-    $werte["freigabenNames"] = ["User1","user2","user5"];
-    $werte["freigabenUids"] = [1,2,3];
+    $db = connectDB();
+    /* status */
+
+
+    if ($_SESSION["isAdmin"]) {
+        $werte["status"] = "admin";
+    } else {
+        if ($bild->getOwner()==$_SESSION["uid"]) {
+            $werte["status"]="owner";
+        } else {
+            $werte["status"]="guest";
+        }
+    }
+
+
+    /* name */
+    // $werte["ownerName"] = "Testname";
+    $sql = "SELECT username FROM user WHERE uid=?";
+    $res = prepared_query($db, $sql, [$bild->getOwner()])->get_result();
+    while ($row = $res->fetch_assoc()) {
+        $werte["ownerName"]=$row["username"];
+    }
+
+    /* updateDatum */
+    // $werte["uploadDatum"] = "2020-05-05";
+    $sql = "SELECT uploadDatum FROM bild WHERE bid=?";
+    $res = prepared_query($db, $sql, [$bild->getBid()])->get_result();
+    while ($row = $res->fetch_assoc()) {
+        $werte["uploadDatum"]=$row["uploadDatum"];
+    }
+
+
+    /* tags */
+    $sql = "SELECT bezeichnung FROM tagonbild WHERE bid=?";
+    $res = prepared_query($db, $sql, [$bild->getBid()])->get_result();
+    $temp = [];
+    while ($row = $res->fetch_assoc()) {
+        array_push($temp, $row["bezeichnung"]);
+    }
+    $werte["tags"]=$temp;
+
+    /* freigaben */
+    $sql = "SELECT username, uid FROM user WHERE uid IN (SELECT uid FROM freigabe WHERE bid = ?)";
+    $res = prepared_query($db, $sql, [$bild->getBid()])->get_result();
+    $temp2 = [];
+    $temp3 = [];
+    while ($row = $res->fetch_assoc()) {
+        array_push($temp2, $row["username"]);
+        array_push($temp3, $row["uid"]);
+    }
+    $werte["freigabenNames"] = $temp2;
+    $werte["freigabenUids"] = $temp3;
+
+    /* Closing Connection */
+    $db->close();
     return $werte;
 }

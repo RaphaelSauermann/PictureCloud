@@ -24,12 +24,21 @@ class Bild
         $this->latitude = $latitude;
     }
 
-    public function getHTML($userStatus)
+    public function getHTML()
     {
-        $zusatzInfos = getBildAdditonalInformation($this->bid);
-        if(empty($this->uploadDatum)){
-          $this->uploadDatum = $zusatzInfos["uploadDatum"];
+        /* get additonal information */
+        $zusatzInfos = getBildAdditonalInformation($this);
+        if (empty($this->uploadDatum)) {
+            $this->uploadDatum = $zusatzInfos["uploadDatum"];
         }
+
+        /* setting the visability levels (write or readable or part part)*/
+        if ($zusatzInfos["status"]=="admin") {
+        } elseif ($zusatzInfos["owner"]) {
+            // code...
+        } else {
+        }
+
         // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
         echo '<div class="container" id="bild'.$this->bid.'">';
         echo '<div class="card" style="width: 1/3%;">';
@@ -116,8 +125,8 @@ class Bild
         echo '<div class="list-group">';
         echo '<li class="list-group-item disabled" aria-disabled="true">Tags</li>';
         foreach ($zusatzInfos["tags"] as $key => $value) {
-          // print for all tags
-          echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
+            // print for all tags
+            echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
         }
         // echo '<a href="" class="list-group-item list-group-item-action">Meer</a>';
         // echo '<a href="" class="list-group-item list-group-item-action">Berge</a>';
@@ -146,9 +155,9 @@ class Bild
         //   // code...
         // }
         foreach ($zusatzInfos["freigabenNames"] as $key => $value) {
-          // print for all tags
-          // echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">Sonnenuntergang</a>';
-          echo '<a href="index.php?page=pics&deleteUser='.$zusatzInfos["freigabenUids"][$key].'&delteUserBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
+            // print for all tags
+            // echo '<a href="index.php?page=pics&deleteTagTag='.$value.'&delteTagBild='.$this->bid.'" class="list-group-item list-group-item-action">Sonnenuntergang</a>';
+            echo '<a href="index.php?page=pics&deleteUser='.$zusatzInfos["freigabenUids"][$key].'&delteUserBild='.$this->bid.'" class="list-group-item list-group-item-action">'.$value.'</a>';
         }
 
         // echo '<a href="" class="list-group-item list-group-item-action">user43</a>';

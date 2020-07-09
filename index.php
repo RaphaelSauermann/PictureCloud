@@ -2,6 +2,7 @@
 <?php
 session_start();
 $_SESSION["uid"]=1;
+$_SESSION["isAdmin"]=0;
  ?>
 <html lang="de" dir="ltr">
 
