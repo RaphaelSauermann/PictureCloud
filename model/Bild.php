@@ -33,10 +33,24 @@ class Bild
         }
 
         /* setting the visability levels (write or readable or part part)*/
+        $visability = [];
+        $visability["owner"]="readonly";
+        $visability["other"]="readonly";
+        $visability["checkbox"]="disabled";
         if ($zusatzInfos["status"]=="admin") {
-        } elseif ($zusatzInfos["owner"]) {
-            // code...
-        } else {
+            $visability["owner"]="";
+            $visability["other"]="";
+            $visability["checkbox"]="";
+        }
+        if ($zusatzInfos["status"]=="owner") {
+            $visability["other"]="";
+            $visability["checkbox"]="";
+        }
+
+        if($this->isPublic){
+          $checkboxChecked = "checked";
+        }else{
+          $checkboxChecked = "";
         }
 
         // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
@@ -58,14 +72,14 @@ class Bild
         echo '<!-- Bildname -->';
         echo '<div class="form-group">';
         echo '<label for="formGroupExampleInput">Bildname</label>';
-        echo '<input type="text" class="form-control" name="name" id="name'.$this->bid.'" value="'.$this->name.'">';
+        echo '<input type="text" class="form-control" name="name" id="name'.$this->bid.'" value="'.$this->name.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '<div class="col">';
         echo '<!-- Bildowner -->';
         echo '<div class="form-group">';
         echo '<label for="formGroupExampleInput2">Owner</label>';
-        echo '<input type="text" class="form-control" name="owner" id="owner'.$this->bid.'" value="'.$zusatzInfos["ownerName"].'">';
+        echo '<input type="text" class="form-control" name="owner" id="owner'.$this->bid.'" value="'.$zusatzInfos["ownerName"].'" '.$visability["owner"].'>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -74,14 +88,14 @@ class Bild
         echo '<!-- Änderungsdatum -->';
         echo '<div class="form-group">';
         echo '<label for="uploadDatum'.$this->bid.'">Änderungsdatum</label>';
-        echo '<input type="text" class="form-control" name="uploadDatum" id="uploadDatum'.$this->bid.'" value="'.$this->uploadDatum.'">';
+        echo '<input type="text" readonly class="form-control" name="uploadDatum" id="uploadDatum'.$this->bid.'" value="'.$this->uploadDatum.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '<div class="col">';
         echo '<!-- Aufnahmedatum -->';
         echo '<div class="form-group">';
         echo '<label for="aufnahmeDatum'.$this->bid.'">Aufnahmedatum</label>';
-        echo '<input type="text" class="form-control" name="aufnahmeDatum" id="aufnahmeDatum'.$this->bid.'" value="'.$this->aufnahmeDatum.'">';
+        echo '<input type="text" class="form-control" name="aufnahmeDatum" id="aufnahmeDatum'.$this->bid.'" value="'.$this->aufnahmeDatum.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -90,14 +104,14 @@ class Bild
         echo '<!-- Latitude -->';
         echo '<div class="form-group">';
         echo '<label for="latitude'.$this->bid.'">Latitude</label>';
-        echo '<input type="text" class="form-control" name="latitude" id="latitude'.$this->bid.'" value="'.$this->latitude.'">';
+        echo '<input type="text" class="form-control" name="latitude" id="latitude'.$this->bid.'" value="'.$this->latitude.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '<div class="col-sm-3">';
         echo '<!-- Longitude -->';
         echo '<div class="form-group">';
         echo '<label for="longitude'.$this->bid.'">Longitude</label>';
-        echo '<input type="text" class="form-control" name="longitude" id="longitude'.$this->bid.'" value="'.$this->longitude.'">';
+        echo '<input type="text" class="form-control" name="longitude" id="longitude'.$this->bid.'" value="'.$this->longitude.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '<div class="col-sm-6">';
@@ -105,15 +119,17 @@ class Bild
         echo '<div class="form-group">';
         echo '<div class="form-check">';
         echo '<input type="text" class="" name="bid" value="'.$this->bid.'" hidden>';
-        echo '<input class="form-check-input" name="isPublic" type="checkbox" value="1" id="isPublic'.$this->bid.'">';
+        echo '<input class="form-check-input" name="isPublic" type="checkbox" value="1" id="isPublic'.$this->bid.'" '.$visability["checkbox"].' '.$checkboxChecked.'>';
         echo '<label class="form-check-label" for="isPublic'.$this->bid.'">';
         echo 'is Public';
         echo '</label>';
         echo '</div>';
         echo '</div>';
         // echo '<a href="#" class="btn-sm btn-primary">Update felder</a>';
-        echo '<input type="submit" class="btn-sm btn-primary" value="Update felder" />';
-        echo '<a href="index.php?page=pics&deleteBild='.$this->bid.'" class="btn-sm btn-danger">Bild löschen</a>';
+        if ($zusatzInfos["status"]!="guest") {
+            echo '<input type="submit" class="btn-sm btn-primary" value="Update felder" />';
+            echo '<a href="index.php?page=pics&deleteBild='.$this->bid.'" class="btn-sm btn-danger">Bild löschen</a>';
+        }
         echo '</div>';
         echo '</div>';
         echo '</form>';
@@ -134,16 +150,18 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von TAGS -->';
-        echo '<form action="index.php?page=pics" method="post">';
-        echo '<div class="input-group mb-3">';
-        echo '<input type="text" class="form-control" name="newTag" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">';
-        echo '<input type="text" class="" name="bid" value="'.$this->bid.'" hidden>';
-        echo '<div class="input-group-append">';
-        // echo '<button class="btn btn-outline-secondary" type="button" id="addTagButton'.$this->bid.'">hinzufügen</button>';
-        echo '<input type="submit" class="btn btn-outline-secondary" value="Tag hinzufügen" />';
-        echo '</div>';
-        echo '</div>';
-        echo '</form>';
+        if ($zusatzInfos["status"]!="guest") {
+            echo '<form action="index.php?page=pics" method="post">';
+            echo '<div class="input-group mb-3">';
+            echo '<input type="text" class="form-control" name="newTag" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">';
+            echo '<input type="text" class="" name="bid" value="'.$this->bid.'" hidden>';
+            echo '<div class="input-group-append">';
+            // echo '<button class="btn btn-outline-secondary" type="button" id="addTagButton'.$this->bid.'">hinzufügen</button>';
+            echo '<input type="submit" class="btn btn-outline-secondary" value="Tag hinzufügen" />';
+            echo '</div>';
+            echo '</div>';
+            echo '</form>';
+        }
         echo '<!-- Spacer -->';
         echo '<hr />';
         echo '<!-- Anzeige der Freigaben -->';
@@ -166,16 +184,18 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von Freigaben -->';
-        echo '<form action="index.php?page=pics" method="post">';
-        echo '<div class="input-group mb-3">';
-        echo '<input type="text" class="form-control" name="newPublic" placeholder="neue Freigabe" aria-label="neuer Tag" aria-describedby="button-addon">';
-        echo '<input type="text" class="" name="bid" value="'.$this->bid.'" hidden>';
-        echo '<div class="input-group-append">';
-        // echo '<button class="btn btn-outline-secondary" type="button" id="addFreigabe'.$this->bid.'">hinzufügen</button>';
-        echo '<input type="submit" class="btn btn-outline-secondary" value="Freigabe hinzufügen" />';
-        echo '</div>';
-        echo '</div>';
-        echo '</form>';
+        if ($zusatzInfos["status"]!="guest") {
+            echo '<form action="index.php?page=pics" method="post">';
+            echo '<div class="input-group mb-3">';
+            echo '<input type="text" class="form-control" name="newPublic" placeholder="neue Freigabe" aria-label="neuer Tag" aria-describedby="button-addon">';
+            echo '<input type="text" class="" name="bid" value="'.$this->bid.'" hidden>';
+            echo '<div class="input-group-append">';
+            // echo '<button class="btn btn-outline-secondary" type="button" id="addFreigabe'.$this->bid.'">hinzufügen</button>';
+            echo '<input type="submit" class="btn btn-outline-secondary" value="Freigabe hinzufügen" />';
+            echo '</div>';
+            echo '</div>';
+            echo '</form>';
+        }
         echo '</div>';
         echo '</div>';
         echo '</div>';

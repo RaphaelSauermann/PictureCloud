@@ -61,7 +61,10 @@ foreach ($listOfSorters as $key => $value) {
     }
 }
 
-// $pictures = getPictures();
+/* ############################## */
+/* the picture changing functions */
+/* ############################## */
+
 ?>
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->
