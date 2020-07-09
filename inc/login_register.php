@@ -32,6 +32,8 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
     }
     ?>
 
+
+
     <h2> Login </h2>
     <form action="index.php?page=account" method="POST">
 
@@ -59,11 +61,13 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
 
     <?php
     if ($loginErr) {
-        echo "Benutzername und Passwort stimmen nicht überein, überprüfen Sie ihre Eingabe.";
+        echo '<p style="color:red;">Benutzername und Passwort stimmen nicht überein, überprüfen Sie Ihre Eingabe.</p>';
+    }
+    if ($userInactiveErr) {
+        echo '<p style="color:red;">Useraccount ist <i>inaktiv</i>, login nicht möglich.</p>';
     }
 
     echo "</div>";
-
 
     if ($registerLastTab) {
         echo '<div class="tab-pane show active fade" id="register" role="tabpanel" aria-labelledby="register-tab">';
@@ -71,6 +75,8 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
         echo '<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">';
     }
     ?>
+
+
 
     <h2> Registrieren </h2>
     <form action="index.php?page=account" method="POST">
@@ -158,13 +164,13 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
 
     <?php
     if ($pwRegisterErr) {
-        echo "Die eingegebenen Passwörter stimmen nicht überein.";
+        echo '<p style="color:red;">Die eingegebenen Passwörter stimmen nicht überein.</p>';
     }
     if ($userExistsErr) {
-        echo "Username '" . filter_input(INPUT_POST, "username") . "' ist bereits vergeben.";
+        echo '<p style="color:red;">Username "' . filter_input(INPUT_POST, "username") . '" ist bereits vergeben.</p>';
     }
     if ($registerSuccess) {
-        echo "User erfolgreich erstellt! Sie können sich nun anmelden.";
+        echo '<p style="color:green;">"User erfolgreich erstellt! Sie können sich nun anmelden."</p>';
     }
     echo "</div>";
     ?>

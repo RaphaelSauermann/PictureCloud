@@ -2,18 +2,28 @@
     <?php
     // these variables help to display messages at certain points
     $loginErr = FALSE;
+    $userInactiveErr = FALSE;
     $userExistsErr = FALSE;
     $pwRegisterErr = FALSE;
     $registerSuccess = FALSE;
 
     // LOGIN: check credentials for login
     if (null !== (filter_input(INPUT_POST, "anmelden"))) {
-        // Calls SELECT on users to check password
-        if (userLogin(filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "password"))) {
-            //reload page to have session set to TRUE
-            header("Location: index.php?page=account");
-        } else {
-            $loginErr = TRUE;
+        // Calls SELECT on users to check password 
+        // 0 - false password
+        // 1 - successful login
+        // 2 - user inaktive, login not permitted
+        switch (userLogin(filter_input(INPUT_POST, "username"), filter_input(INPUT_POST, "password"))) {
+            case 0:
+                $loginErr = TRUE;
+                break;
+            case 1:
+                //reload page to have session set to TRUE
+                header("Location: index.php?page=account");
+                break;
+            case 2:
+                $userInactiveErr = TRUE;
+                break;
         }
     }
 
