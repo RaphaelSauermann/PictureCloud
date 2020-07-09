@@ -9,14 +9,14 @@
       </a>
       <!-- aufklappbare zusatzinfos -->
       <div class="container collapse show" id="collapseExample">
-        <form>
+        <form action="index.php?page=pics" method="post">
           <!-- Anzeige der Attribute des Bildes -->
           <div class="row">
             <div class="col">
               <!-- Bildname -->
               <div class="form-group">
                 <label for="formGroupExampleInput">Bildname</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" value="Sonnenuntergang">
+                <input type="text" name="name" class="form-control" id="formGroupExampleInput" value="Sonnenuntergang">
               </div>
             </div>
             <div class="col">
@@ -68,7 +68,8 @@
                   </label>
                 </div>
               </div>
-              <a href="#" class="btn-sm btn-primary">Update felder</a>
+              <!-- <a href="#" class="btn-sm btn-primary">Update felder</a> -->
+              <input type="submit" class="btn-sm btn-primary" value="Update felder" />
               <a href="#" class="btn-sm btn-danger">Bild löschen</a>
             </div>
           </div>
@@ -88,10 +89,14 @@
         </div>
         <!-- Hinzufügen von TAGS -->
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="searchButton">hinzufügen</button>
-          </div>
+          <form action="index.php?page=pics" method="post">
+            <input type="text" class="form-control" name="newTag" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">
+            <input type="text" class="" name="bid" value="'.$this->bid.'" hidden>
+            <div class="input-group-append">
+              <!-- <button class="btn btn-outline-secondary" type="button" id="searchButton">hinzufügen</button> -->
+              <input type="submit" class="btn btn-outline-secondary" value="Tag hinzufügen" />
+            </div>
+          </form>
         </div>
         <!-- Spacer -->
         <hr />

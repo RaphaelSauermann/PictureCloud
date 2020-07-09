@@ -89,19 +89,19 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
 
     /* list of tags that get filtered by */
     if (!empty($tags)) {
-        $temp = "bid IN (SELECT bid FROM tagonbild WHERE ";
+        $tagQueryPart = "bid IN (SELECT bid FROM tagonbild WHERE ";
         $i = count($tags);
         foreach ($tags as $key => $value) {
             // bid IN (SELECT bid FROM tagonbild WHERE bezeichnung = $value)
-            $temp .= 'bezeichnung = ?';
+            $tagQueryPart .= 'bezeichnung = ?';
             array_push($values, $value);
             $last_iteration = !(--$i); //boolean true/false
             if (!$last_iteration) {
                 $temp .= " OR ";
             }
         }
-        $temp .= ") ";
-        array_push($whereClauses, $temp);
+        $tagQueryPart .= ") ";
+        // array_push($whereClauses, $temp);
     }
     // Generating Query with WHERE Clauses
     $sql = "SELECT * FROM bild ";
@@ -113,9 +113,12 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
             $sql .= $value;
             $last_iteration = !(--$i); //boolean true/false
             if (!$last_iteration) {
-                $sql .= "AND ";
+                $sql .= "OR ";
             }
         }
+    }
+    if(!empty($tagQueryPart)){
+      $sql .= "AND ".$tagQueryPart;
     }
 
 
