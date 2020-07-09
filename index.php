@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
+$_SESSION["uid"]=1;
  ?>
 <html lang="de" dir="ltr">
 

@@ -67,7 +67,7 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
     $whereClauses = [];
     $values = [];
     if (empty($freigabeFilterung)) {
-      return "nothing to Show";
+        return "nothing to Show";
     }
     /* checking the freigabe filterungen */
     if (in_array("own", $freigabeFilterung)) {
@@ -126,14 +126,31 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         $sql .= " ORDER BY $sortBy";
     }
 
-    echo $sql."<br>";
-    var_dump($values);
+    // echo $sql."<br>";
+    // var_dump($values);
     // $sql = "";
     $res = prepared_query($db, $sql, $values)->get_result();
     $pictures = [];
     while ($row = $res->fetch_assoc()) {
         $newPic = new Bild($row['bid'], $row['name'], $row['owner'], $row['pfad'], $row['aufnahmeDatum'], $row['isPublic'], $row['longitude'], $row['latitude']);
-        array_push($pictures, $newPic);
+        // array_push($pictures, $newPic);
+        $pictures[$newPic->getBid()] = $newPic;
     }
     return $pictures;
+}
+
+/* returns additonal information for bild:
+owner
+UpdateDatum
+Tags
+Freigaben
+*/
+function getBildAdditonalInformation($bid)
+{
+    $werte["ownerName"] = "Testname";
+    $werte["uploadDatum"] = "2020-05-05";
+    $werte["tags"] = ["Sonne","Mond","Sterne"];
+    $werte["freigabenNames"] = ["User1","user2","user5"];
+    $werte["freigabenUids"] = [1,2,3];
+    return $werte;
 }
