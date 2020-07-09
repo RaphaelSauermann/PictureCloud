@@ -157,13 +157,22 @@ foreach ($listOfSorters as $key => $value) {
 /* list of tags that get filtered by */
 
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
+$i = 0;
+echo '<div class="row">';
 foreach ($pictures as $key => $value) {
+  echo '<div class="col">';
   $value->getHTML("fine");
   // echo "<br>";
+  echo "</div>";
+  if(++$i%3==0){
+    echo "</div>";
+    echo '<div class="row">';
+  }
 }
+echo "</div>";
 
-foreach ($_POST as $key => $value) {
-  echo $key.": ".$value."<br>";
-}
+// foreach ($_POST as $key => $value) {
+//   echo $key.": ".$value."<br>";
+// }
 
  ?>

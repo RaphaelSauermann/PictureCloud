@@ -32,9 +32,9 @@ class Bild
         }
         // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
         echo '<div class="container" id="bild'.$this->bid.'">';
-        echo '<div class="card" style="width: 40rem;">';
+        echo '<div class="card" style="width: 1/3%;">';
         echo '<!-- thumbnail -->';
-        echo '<img src="'.$this->pfad.'" class="card-img-top" alt="...">';
+        echo '<img src="'.$this->pfad.'" class="card-img-top" alt="">';
         echo '<div class="card-body">';
         echo '<!-- Button zum aufklappen -->';
         echo '<a class="btn btn-outline-dark" data-toggle="collapse" href="#collapseBild'.$this->bid.'" role="button" aria-expanded="true" aria-controls="collapseExample">';
