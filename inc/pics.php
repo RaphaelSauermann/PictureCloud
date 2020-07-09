@@ -3,7 +3,7 @@
 if (!isset($_SESSION["showPicturesData"])) {
     echo "Muss neue Session initalisieren!";
     $filterData["freigabeFilterung"] = ["own","open","public"];
-    $filterData["sortBy"] = "";
+    $filterData["sortBy"] = "name";
     $filterData["tags"] = [];
     $filterData["search"] = "";
     $_SESSION["showPicturesData"] = $filterData;
@@ -52,7 +52,7 @@ foreach ($listOfFilters as $key => $value) {
 }
 
 /* Setting for sortierung */
-$listOfSorters = ["name","owner","changeDate","takenDate","lat","long"];
+$listOfSorters = ["name","owner","uploadDatum","aufnahmeDatum","latitude","longitude"];
 foreach ($listOfSorters as $key => $value) {
     if ($value == $_SESSION["showPicturesData"]["sortBy"]) {
         $activeParts[$value] = "active";
@@ -61,14 +61,8 @@ foreach ($listOfSorters as $key => $value) {
     }
 }
 
-$pictures = getPictures();
-
-foreach ($pictures as $key => $value) {
-  $value->getHTML("fine");
-  echo "<br>";
-}
-
- ?>
+// $pictures = getPictures();
+?>
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->
 <div class="container">
@@ -97,10 +91,10 @@ foreach ($pictures as $key => $value) {
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <a class="dropdown-item <?php echo $activeParts["name"]; ?>" href="index.php?page=pics&sortBy=name">Bildname </a>
           <a class="dropdown-item <?php echo $activeParts["owner"]; ?>" href="index.php?page=pics&sortBy=owner">Owner</a>
-          <a class="dropdown-item <?php echo $activeParts["changeDate"]; ?>" href="index.php?page=pics&sortBy=changeDate">Änderungsdatum</a>
-          <a class="dropdown-item <?php echo $activeParts["takenDate"]; ?>" href="index.php?page=pics&sortBy=takenDate">Aufnahmedatum</a>
-          <a class="dropdown-item <?php echo $activeParts["lat"]; ?>" href="index.php?page=pics&sortBy=lat">Latitude</a>
-          <a class="dropdown-item <?php echo $activeParts["long"]; ?>" href="index.php?page=pics&sortBy=long">Longitude</a>
+          <a class="dropdown-item <?php echo $activeParts["uploadDatum"]; ?>" href="index.php?page=pics&sortBy=uploadDatum">Änderungsdatum</a>
+          <a class="dropdown-item <?php echo $activeParts["aufnahmeDatum"]; ?>" href="index.php?page=pics&sortBy=aufnahmeDatum">Aufnahmedatum</a>
+          <a class="dropdown-item <?php echo $activeParts["latitude"]; ?>" href="index.php?page=pics&sortBy=latitude">Latitude</a>
+          <a class="dropdown-item <?php echo $activeParts["longitude"]; ?>" href="index.php?page=pics&sortBy=longitude">Longitude</a>
         </div>
       </div>
     </div>
@@ -145,11 +139,6 @@ foreach ($pictures as $key => $value) {
 </div>
 
 <!-- hauptteil wo bilder sind -->
-<?php
-/* Get pictures by filters*/
-
-
-?>
 
 
 <div class="container" id="pics">
@@ -273,6 +262,23 @@ foreach ($pictures as $key => $value) {
 </div>
 
 <?php
+/* Print all the pictures in the order they got delivered from the db */
 
+
+/* checking the freigabe filterungen */
+/* check eigene */
+/* check for you freigegeben */
+/* check public */
+
+/* check sort by */
+
+/* list of tags that get filtered by */
+
+$pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
+
+foreach ($pictures as $key => $value) {
+  $value->getHTML("fine");
+  echo "<br>";
+}
 
  ?>
