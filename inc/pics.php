@@ -1,7 +1,7 @@
 <?php
 /* standard values when page is newly opened up */
 if (!isset($_SESSION["showPicturesData"])) {
-    echo "Muss neue Session initalisieren!";
+    // echo "Muss neue Session initalisieren!";
     $filterData["freigabeFilterung"] = ["own","open","public"];
     $filterData["sortBy"] = "name";
     $filterData["tags"] = [];
@@ -78,13 +78,13 @@ if (array_key_exists("deleteTagTag", $_GET)) {
 /* Freigaben */
 // add Freigabe
 
-// if (array_key_exists("newPublic", $_POST)) {
-//     addTagOnBild($_POST["bid"], $_POST["newPublic"]);
-// }
-// // remove Freigabe
-// if (array_key_exists("deleteUser", $_GET)) {
-//     deleteTagOnBild($_GET["delteUserBild"], $_GET["deleteUser"]);
-// }
+if (array_key_exists("newPublic", $_POST)) {
+    addFreigabe($_POST["bid"], $_POST["newPublic"]);
+}
+// remove Freigabe
+if (array_key_exists("deleteUser", $_GET)) {
+    deleteFreigabe($_GET["delteUserBild"], $_GET["deleteUser"]);
+}
 
 ?>
 <h2>Bilder anschauen</h2>

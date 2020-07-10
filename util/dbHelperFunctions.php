@@ -13,16 +13,34 @@ function deleteTagOnBild($bid, $tagBez)
     return addNewEntry("DELETE FROM tagonbild WHERE bid = ? AND bezeichnung = ?", $params, $types = "ds");
 }
 
-function addFreigabe($bid, $uid)
+function getUid($username)
 {
-    $params[0] = $bid;
-    $params[1] = $uid;
-    return addNewEntry("INSERT INTO freigabe(bid, uid) VALUES (?,?)", $params, $types = "dd");
+    /* check if user exists */
+    $db = connectDB();
+    $sql = "SELECT uid FROM user WHERE username = ?";
+    $res = prepared_query($db, $sql, [$username])->get_result();
+    while ($row = $res->fetch_assoc()) {
+        echo "habe uid gefunden!".$row["uid"];
+        $db->close();
+        return $row["uid"];
+    }
 }
 
-function deleteFreigabe($bid, $tagBez)
+function addFreigabe($bid, $username)
 {
-    $params[0] = $bid;
-    $params[1] = $tagBez;
-    return addNewEntry("DELETE FROM freigabe WHERE bid = ? AND uid = ?", $params, $types = "dd");
+    $uid = getUid($username);
+    if (isset($uid)) {
+        $params[0] = $bid;
+        $params[1] = $uid;
+        return addNewEntry("INSERT INTO freigabe(bid, uid) VALUES (?,?)", $params, $types = "dd");
+    }
+}
+
+function deleteFreigabe($bid, $uid)
+{
+    if (isset($uid)) {
+        $params[0] = $bid;
+        $params[1] = $uid;
+        return addNewEntry("DELETE FROM freigabe WHERE bid = ? AND uid = ?", $params, $types = "dd");
+    }
 }
