@@ -86,6 +86,36 @@ if (array_key_exists("deleteUser", $_GET)) {
     deleteFreigabe($_GET["delteUserBild"], $_GET["deleteUser"]);
 }
 
+
+/* update pictures */
+if (array_key_exists("owner", $_POST) && array_key_exists("uploadDatum", $_POST)) {
+    // echo "upadte!";
+    $updateWerte=[];
+    $updateWerte["name"]=$_POST["name"];
+    $updateWerte["owner"]=$_POST["owner"];
+    $updateWerte["uploadDatum"]=$_POST["uploadDatum"];
+    $updateWerte["aufnahmeDatum"]=$_POST["aufnahmeDatum"];
+    $updateWerte["latitude"]=$_POST["latitude"];
+    $updateWerte["longitude"]=$_POST["longitude"];
+    $updateWerte["bid"]=$_POST["bid"];
+    //check if is public
+    if (array_key_exists("isPublic", $_POST)) {
+        $updateWerte["isPublic"] = 1;
+    } else {
+        $updateWerte["isPublic"] = 0;
+    }
+    /* */
+    updatePicture($updateWerte);
+    // deleteFreigabe($_GET["delteUserBild"], $_GET["deleteUser"]);
+}
+
+/* delete Picture */
+// remove Freigabe
+if (array_key_exists("deleteBild", $_GET)) {
+    deletePicture($_GET["deleteBild"]);
+}
+
+
 ?>
 <h2>Bilder anschauen</h2>
 <!-- Suche und Filterungsteil -->

@@ -20,7 +20,7 @@ function getUid($username)
     $sql = "SELECT uid FROM user WHERE username = ?";
     $res = prepared_query($db, $sql, [$username])->get_result();
     while ($row = $res->fetch_assoc()) {
-        echo "habe uid gefunden!".$row["uid"];
+        // echo "habe uid gefunden!".$row["uid"];
         $db->close();
         return $row["uid"];
     }

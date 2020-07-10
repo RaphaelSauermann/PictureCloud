@@ -99,7 +99,7 @@ class Bild
         echo '<!-- Aufnahmedatum -->';
         echo '<div class="form-group">';
         echo '<label for="aufnahmeDatum'.$this->bid.'">Aufnahmedatum</label>';
-        echo '<input type="text" class="form-control" name="aufnahmeDatum" id="aufnahmeDatum'.$this->bid.'" value="'.$this->aufnahmeDatum.'" '.$visability["other"].'>';
+        echo '<input type="date" class="form-control" name="aufnahmeDatum" id="aufnahmeDatum'.$this->bid.'" value="'.$this->aufnahmeDatum.'" '.$visability["other"].'>';
         echo '</div>';
         echo '</div>';
         echo '</div>';

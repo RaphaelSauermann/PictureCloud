@@ -219,3 +219,38 @@ function getBildAdditonalInformation($bild)
     $db->close();
     return $werte;
 }
+
+
+function updatePicture($updateWerte)
+{
+    $db = connectDB();
+    // echo "update:";
+    // foreach ($updateWerte as $key => $value) {
+    //     echo $key.": ".$value."<br>";
+    // }
+    $uid = getUid($updateWerte["owner"]);
+    if (isset($uid)) {
+        $sql = "UPDATE bild SET name = ?, owner  = ?, aufnahmeDatum = ?, isPublic = ?, longitude = ?, latitude = ? WHERE bid  = ?;";
+        $res = prepared_query($db, $sql, [$updateWerte["name"],$uid,$updateWerte["aufnahmeDatum"],$updateWerte["isPublic"],$updateWerte["longitude"],$updateWerte["latitude"],$updateWerte["bid"]]);
+    }
+    $db->close();
+}
+
+function deletePicture($bid)
+{
+    /* check if user exists */
+    $db = connectDB();
+    $sql = "SELECT pfad FROM bild WHERE bid = ?";
+    $res = prepared_query($db, $sql, [$bid])->get_result();
+    while ($row = $res->fetch_assoc()) {
+        // echo "habe uid gefunden!".$row["uid"];
+        $path =  $row["pfad"];
+    }
+
+    if(isset($path)){
+      unlink($path);
+      $sql = "DELETE FROM bild WHERE bid = ?";
+      $res = prepared_query($db, $sql, [$bid]);
+    }
+    $db->close();
+}
