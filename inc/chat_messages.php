@@ -1,7 +1,6 @@
 
 <?php
-echo '<label for="msg"><b>Message User <i>"' . filter_input(INPUT_GET, "theirUsername") . '"</i></b></label>';
-echo '<hr>';
+
 /*
   echo filter_input(INPUT_GET, "myId");
   echo filter_input(INPUT_GET, "theirId");
@@ -39,9 +38,6 @@ echo '</div>';
 // Input field
 ?>
 
-
-<input type="text" name="msg" id="msg" required>
-<button type = "button" class = "btn btn-success" id="sendMsg">Send</button>
 
 
 <?php

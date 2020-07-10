@@ -10,9 +10,13 @@ $userList = getAllUsers();
 $userlist = '<div class="list-group">';
 foreach ($userList as $user) {
     $tempUserObject = getUserById($user);
-    $userlist .= '<button type="button" class="btn btn-light" id="userIdButton" onclick="chooseUser(' . $_SESSION['uid'] . ',' . $tempUserObject->getUid() . ',\'' . $_SESSION['username'] . '\',\'' . $tempUserObject->getUsername() . '\')">' . $tempUserObject->getUsername() . '</button>';
+    $userlist .= '<button type="button" class="btn btn-light" onclick="chooseUser(' . $_SESSION['uid'] . ',' . $tempUserObject->getUid() . ',\'' . $_SESSION['username'] . '\',\'' . $tempUserObject->getUsername() . '\')">' . $tempUserObject->getUsername() . '</button>';
 }
 $userlist .= '</div>';
+
+// Überschrift, "Message User "_username_"
+$messageTitle = '<label for="msg"><b>Message User <i>"' . filter_input(INPUT_GET, "theirUsername") . '"</i></b></label>';
+$messageTitle .= '<hr>';
 ?>
 
 
@@ -30,14 +34,28 @@ $userlist .= '</div>';
             </div>
         </div>
         <div id="userlist" hidden><?php echo $userlist ?></div>
+        <div id="messageTitle" hidden><?php echo $messageTitle ?></div>
         <div id="chat_content">
             <!-- creates buttons for all users, on click opens chat with user -->
             <?php echo $userlist ?>
+        </div>
+        <div id="inputFields" style="display: none;">
+            <input type="text" name="msg" id="msg" required>
+            <button type = "button" class = "btn btn-success" id="sendMsg">Send</button>
         </div>
 
         <button type = "button" class = "btn btn-danger" onclick = "closeForm()">Close</button>
     </form>
 </div>
+
+
+
+
+
+
+
+
+
 
 <script>
 
@@ -51,8 +69,14 @@ $userlist .= '</div>';
                 $("#chat_content").html(result);
             }
         });
+        document.getElementById("inputFields").style.display = 'block';
     }
+
+
+
+
     function backToUserlist() {
+        document.getElementById("inputFields").style.display = 'none';
         $.ajax({
             success: function () {
                 $("#chat_content").html(document.getElementById('userlist').innerHTML);
