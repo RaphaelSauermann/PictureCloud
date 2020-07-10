@@ -84,7 +84,8 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
     // public
     if (in_array("public", $freigabeFilterung)) {
         // isPublic = 1
-        array_push($whereClauses, 'isPublic = 1 ');
+        array_push($whereClauses, 'isPublic = ? ');
+        array_push($values, 1);
     }
 
     /* list of tags that get filtered by */
@@ -97,7 +98,7 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
             array_push($values, $value);
             $last_iteration = !(--$i); //boolean true/false
             if (!$last_iteration) {
-                $temp .= " OR ";
+                $tagQueryPart .= " OR ";
             }
         }
         $tagQueryPart .= ") ";
@@ -129,20 +130,26 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         $sql .= " ORDER BY $sortBy";
     }
 
-    // echo $sql."<br>";
-    // var_dump($values);
+    echo $sql."<br>";
+    var_dump($values);
     // $sql = "";
     $res = prepared_query($db, $sql, $values)->get_result();
     $pictures = [];
+    $count = 0;
     while ($row = $res->fetch_assoc()) {
         $newPic = new Bild($row['bid'], $row['name'], $row['owner'], $row['pfad'], $row['aufnahmeDatum'], $row['isPublic'], $row['longitude'], $row['latitude']);
         // array_push($pictures, $newPic);
         $pictures[$newPic->getBid()] = $newPic;
+        $count++;
     }
     /* Closing Connection */
     $db->close();
 
-    return $pictures;
+    if ($count) {
+        return $pictures;
+    } else {
+        return "whoi";
+    }
 }
 
 /* returns additonal information for bild:

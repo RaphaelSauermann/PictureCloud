@@ -174,17 +174,17 @@ if (array_key_exists("deleteUser", $_GET)) {
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
 $i = 0;
 echo '<div class="row">';
-foreach ($pictures as $key => $value) {
-    echo '<div class="col">';
-    $value->getHTML();
-    // echo "<br>";
-    echo "</div>";
-    if (++$i%3==0) {
-        echo "</div>";
-        echo '<div class="row">';
-    }
-}
-echo "</div>";
+  foreach ($pictures as $key => $value) {
+      echo '<div class="col">';
+      $value->getHTML();
+      // echo "<br>";
+      echo "</div>";
+      if (++$i%3==0) {
+          echo "</div>";
+          echo '<div class="row">';
+      }
+  }
+
 
 // foreach ($_POST as $key => $value) {
 //   echo $key.": ".$value."<br>";
