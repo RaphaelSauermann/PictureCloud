@@ -13,10 +13,10 @@ if (isset($_GET['page'])) {
             include 'inc/uploadPicture.php';
             // $buttonId = "buttonHome";
             break;
-        case "map":
-            include 'inc/map.php';
-            // $buttonId = "buttonHome";
-            break;
+        // case "map":
+        //     include 'inc/map.php';
+        //     // $buttonId = "buttonHome";
+        //     break;
         case "help":
             include 'inc/help.php';
             // $buttonId = "buttonHome";

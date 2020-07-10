@@ -10,10 +10,10 @@
                 <a class="nav-link" href="index.php?page=pics">Bilder anschauen</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?page=upload">Bild hochladen</a>
+              <a class="nav-link" href="index.php?page=pics&toggleMap=1">Bilderkarte</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?page=map">Bilderkarte</a>
+                <a class="nav-link" href="index.php?page=upload">Bild hochladen</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?page=help">Impressum & Hilfe</a>
