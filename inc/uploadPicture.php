@@ -1,4 +1,9 @@
 <h2>Bilderupload</h2>
+<?php
+if (!$_SESSION["loginStatus"]) {
+    header("Location: index.php?page=pics");
+}
+ ?>
 <form enctype="multipart/form-data" method="post" action="">
 
 
@@ -43,7 +48,7 @@
 </form>
 
 <?php
-$target_dir = $pathToPics."/misc";
+$target_dir = $pathToPics."/".$_SESSION["uid"];
 if (isset($_FILES["fileToUpload"])) {
     $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
     if (!is_dir($target_dir)) {
@@ -59,7 +64,7 @@ if (isset($_FILES["fileToUpload"])) {
             if (isset($_POST)) {
                 $picName = $_POST["picName"];
                 //TODO SESSION User id to owners
-                $picOwner = 1;
+                $picOwner = $_SESSION["uid"];
                 $picPfad = $target_file;
                 $picAufnahmeDatum = $_POST["picTaken"];
                 if (isset($_POST["picPublic"]) && $_POST["picPublic"] == "isPublic") {
@@ -79,7 +84,6 @@ if (isset($_FILES["fileToUpload"])) {
                 // $pic = new Bild($picId, $picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude);
                 // var_dump($pic);
             }
-
         } else {
             echo "Fehler beim Upload!<br>";
             //Fehlerausgabe
