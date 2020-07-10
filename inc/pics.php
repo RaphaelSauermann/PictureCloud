@@ -207,12 +207,22 @@ if (array_key_exists("deleteBild", $_GET)) {
 /* Print all the pictures in the order they got delivered from the db */
 /* list of tags that get filtered by */
 
+if ($showMap) {
+  include 'inc/map.php';
+  $jsAddCommandos = [];
+}
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
 $i = 0;
 echo '<div class="row">';
   foreach ($pictures as $key => $value) {
       echo '<div class="col">';
       $value->getHTML();
+      if ($showMap) {
+          if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
+              // Add popover for picture
+              array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"'. $value->getName().'");');
+          }
+      }
       // echo "<br>";
       echo "</div>";
       if (++$i%3==0) {
@@ -220,14 +230,11 @@ echo '<div class="row">';
           echo '<div class="row">';
       }
   }
-
 if ($showMap) {
-    include 'inc/map.php';
+    echo '<script type="text/javascript">';
+    foreach ($jsAddCommandos as $key => $value) {
+        echo $value;
+    }
+    echo '</script>';
 }
-
-
-// foreach ($_POST as $key => $value) {
-//   echo $key.": ".$value."<br>";
-// }
-
  ?>

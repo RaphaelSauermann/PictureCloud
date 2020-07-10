@@ -12,10 +12,9 @@ function createMap() {
 }
 
 function addMarker(lat, long, text) {
-  L.marker([lat, long]).addTo(lmap)
+  // marker = new L.marker([lat, long]).addTo(lmap)
+  //   .bindPopup(text);
+    marker = new L.marker([lat, long])
     .bindPopup(text)
-    .openPopup();
-  setTimeout(function() {
-    lmap.invalidateSize()
-  }, 400);
+    .addTo(lmap);
 }

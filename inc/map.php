@@ -15,10 +15,17 @@
 $('#mapModal').modal('show');
 createMap();
 
-addMarker(48.210033, 16.363449, "Foto 1");
+// addMarker(48.210033, 16.363449, "Foto 1");
+// addMarker(48.2100330,16.3634490,"neuer Name!")
 // $('#mapModal').on('show.bs.modal', function(){
 //   setTimeout(function() {
 //     map.invalidateSize();
 //   }, 10);
 // });
 </script>
+
+<?php
+  // Trigger add Marker for each Bild with Lat and Long
+
+
+ ?>
