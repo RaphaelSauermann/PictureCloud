@@ -26,4 +26,4 @@ Whopwhop - WEB-Projekt
 - uid
 - loginStatus
 - isAdmin
-
+- showPicturesData
