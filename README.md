@@ -25,5 +25,5 @@ Whopwhop - WEB-Projekt
 - nutzername
 - uid
 - loginStatus
-
+- isAdmin
 
