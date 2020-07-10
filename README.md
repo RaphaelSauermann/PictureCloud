@@ -27,3 +27,6 @@ Whopwhop - WEB-Projekt
 - loginStatus
 - isAdmin
 - showPicturesData
+
+
+# UserChat
