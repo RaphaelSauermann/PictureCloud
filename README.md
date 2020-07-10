@@ -27,3 +27,5 @@ Whopwhop - WEB-Projekt
 - loginStatus
 - isAdmin
 - showPicturesData
+
+Test picture map push
