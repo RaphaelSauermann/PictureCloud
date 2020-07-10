@@ -1,12 +1,18 @@
 <?php
 /* standard values when page is newly opened up */
 if (!isset($_SESSION["showPicturesData"])) {
-    // echo "Muss neue Session initalisieren!";
+    echo "Muss neue Session initalisieren!";
     $filterData["freigabeFilterung"] = ["own","open","public"];
     $filterData["sortBy"] = "name";
     $filterData["tags"] = [];
     $filterData["search"] = "";
     $_SESSION["showPicturesData"] = $filterData;
+}
+
+if (array_key_exists("toggleMap", $_GET)) {
+    $showMap = 1;
+} else {
+    $showMap = 0;
 }
 
 /* get all freigabe Choosen */
@@ -214,6 +220,10 @@ echo '<div class="row">';
           echo '<div class="row">';
       }
   }
+
+if ($showMap) {
+    include 'inc/map.php';
+}
 
 
 // foreach ($_POST as $key => $value) {
