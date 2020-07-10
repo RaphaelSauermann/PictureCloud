@@ -41,7 +41,7 @@ $messageTitle .= '<hr>';
         </div>
         <div id="inputFields" style="display: none;">
             <input type="text" name="msg" id="msg" required>
-            <button type = "button" class = "btn btn-success" id="sendMsg">Send</button>
+            <button type = "button" class = "btn btn-success" id="sendMsg" onclick="sendMessage()">Send</button>
         </div>
 
         <button type = "button" class = "btn btn-danger" onclick = "closeForm()">Close</button>
@@ -58,11 +58,20 @@ $messageTitle .= '<hr>';
 
 
 <script>
+    // variables to store values for chat functions
+    var sender;
+    var recipient;
+    var senderName;
+    var recipientName;
 
     function chooseUser(myId, theirId, myUsername, theirUsername) {
+        sender = myId;
+        recipient = theirId;
+        senderName = myUsername;
+        recipientName = theirUsername;
         $.ajax({
             // replaces content from div "chat_content" with contents from url
-            type: 'GET',
+            type: 'POST',
             url: 'inc/chat_messages.php',
             data: {myId: myId, theirId: theirId, myUsername: myUsername, theirUsername: theirUsername},
             success: function (result) {
@@ -73,8 +82,6 @@ $messageTitle .= '<hr>';
     }
 
 
-
-
     function backToUserlist() {
         document.getElementById("inputFields").style.display = 'none';
         $.ajax({
@@ -83,6 +90,38 @@ $messageTitle .= '<hr>';
             }
         });
     }
+
+    function sendMessage() {
+        var msg = $("#msg").val();
+        if (msg.length === 0)
+        {
+            alert("Enter a message first!");
+            return;
+        }
+
+        var messageData = {
+            sender: sender,
+            recipient: recipient,
+            senderName: senderName,
+            recipientName: recipientName,
+            message: msg,
+            timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            read: 0
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "inc/chat_send.php",
+            data: messageData,
+            success: function (result) {
+                alert(result);
+            }
+        });
+    }
+
+
+
+
 
 
 

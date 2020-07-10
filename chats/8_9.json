@@ -6,7 +6,7 @@
         "recipientName": "User100",
         "message": "First Message",
         "timestamp": "2020-07-10 20:00:00",
-        "read": true
+        "read": 1
     },
     {
         "sender": 9,
@@ -15,6 +15,24 @@
         "recipientName": "User10",
         "message": "Second Message",
         "timestamp": "2020-07-10 20:00:00",
-        "read": true
+        "read": 1
+    },
+    {
+        "sender": "8",
+        "senderName": "User10",
+        "recipient": "9",
+        "recipientName": "User100",
+        "message": "444",
+        "timestamp": "2020-07-10 22:24:38",
+        "read": 0
+    },
+    {
+        "sender": "8",
+        "senderName": "User10",
+        "recipient": "9",
+        "recipientName": "User100",
+        "message": "444",
+        "timestamp": "2020-07-10 22:25:57",
+        "read": "false"
     }
 ]
