@@ -220,7 +220,7 @@ echo '<div class="row">';
       if ($showMap) {
           if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
               // Add popover for picture
-              array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"'. $value->getName().'");');
+              array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
           }
       }
       // echo "<br>";

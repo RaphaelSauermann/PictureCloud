@@ -7,3 +7,9 @@
 #mapid {
   height: 40vw;
 }
+
+.popupImg {
+  width: 100%;
+  height: 4vw;
+  object-fit: cover;
+}
