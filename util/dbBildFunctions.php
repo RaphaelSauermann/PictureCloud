@@ -109,6 +109,7 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
     // $sql = "SELECT * FROM bild WHERE bid > ?";
     if (!empty($whereClauses)) {
         $sql .= "WHERE ";
+        $sql .= " ( ";
         $i = count($whereClauses);
         foreach ($whereClauses as $key => $value) {
             $sql .= $value;
@@ -117,6 +118,7 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
                 $sql .= "OR ";
             }
         }
+        $sql .= " ) ";
     }
     if (!empty($tagQueryPart)) {
         $sql .= "AND ".$tagQueryPart;
@@ -130,8 +132,8 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         $sql .= " ORDER BY $sortBy";
     }
 
-    echo $sql."<br>";
-    var_dump($values);
+    // echo $sql."<br>";
+    // var_dump($values);
     // $sql = "";
     $res = prepared_query($db, $sql, $values)->get_result();
     $pictures = [];
