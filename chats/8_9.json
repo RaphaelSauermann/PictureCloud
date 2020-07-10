@@ -1,0 +1,20 @@
+[
+    {
+        "sender": 8,
+        "senderName": "User10",
+        "recipient": 9,
+        "recipientName": "User100",
+        "message": "First Message",
+        "timestamp": "2020-07-10 20:00:00",
+        "read": true
+    },
+    {
+        "sender": 9,
+        "senderName": "User100",
+        "recipient": 8,
+        "recipientName": "User10",
+        "message": "Second Message",
+        "timestamp": "2020-07-10 20:00:00",
+        "read": true
+    }
+]

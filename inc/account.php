@@ -19,7 +19,7 @@
                 break;
             case 1:
                 //reload page to have session set to TRUE
-                header("Location: index.php?page=account");
+                header("Location: index.php?page=pics");
                 break;
             case 2:
                 $userInactiveErr = TRUE;
