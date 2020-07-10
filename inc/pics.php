@@ -1,7 +1,7 @@
 <?php
 /* standard values when page is newly opened up */
 if (!isset($_SESSION["showPicturesData"])) {
-    echo "Muss neue Session initalisieren!";
+    // echo "Muss neue Session initalisieren!";
     $filterData["freigabeFilterung"] = ["own","open","public"];
     $filterData["sortBy"] = "name";
     $filterData["tags"] = [];
