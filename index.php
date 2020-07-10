@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
-$_SESSION["uid"]=1;
-$_SESSION["isAdmin"]=0;
- ?>
+if (!isset($_SESSION["loginStatus"])) {
+    $_SESSION["loginStatus"] = FALSE;
+}
+?>
+
 <html lang="de" dir="ltr">
 
   <head>
@@ -30,10 +32,16 @@ $_SESSION["isAdmin"]=0;
     <!-- JS -->
     <script type="text/javascript" src="res/js/pictureCloud.js"></script>
 
+
     <!-- Lighbox -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.js"></script>
     <title>Gallery</title>
+
+    <!-- PAWLIK ADDITIONAL SOURCES - Needed for dynamic functions (Pills,Collapse) -->
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>-->  
+
     <title>Picture Cloud</title>
 
     <!-- <title>PictureCloud</title> -->

@@ -30,6 +30,48 @@ class User {
         $this->isActive = $isActive;
     }
 
+    function addToDB() {
+        $params[0] = $this->username;
+        $params[1] = $this->passwort;
+        $params[2] = $this->anrede;
+        $params[3] = $this->vorname;
+        $params[4] = $this->nachname;
+        $params[5] = $this->adresse;
+        $params[6] = $this->plz;
+        $params[7] = $this->ort;
+        $params[8] = $this->email;
+        return addNewEntry("INSERT INTO user (username, passwort, anrede, vorname, nachname, adresse, plz, ort, email) VALUES (?,?,?,?,?,?,?,?,?)", $params, $types = "ssssssiss");
+    }
+
+    function changeUserPassword($old_password, $new_password) {
+        $success = FALSE;
+        if (password_verify($old_password, $this->getPasswort())) {
+            $pw = password_hash($new_password, PASSWORD_DEFAULT); // Hashes PW
+            $userId = $this->getUid();
+            $db = connectDB();
+            if (($stmt = $db->prepare("UPDATE user SET passwort = ? WHERE uid = ?"))) {
+                $stmt->bind_param("si", $pw, $userId);
+                $success = $stmt->execute();
+            }
+            $stmt->close();
+            $db->close();
+        }
+        return $success;
+    }
+
+    function updateUserData() {
+        $success = FALSE;
+
+        $db = connectDB();
+        if (($stmt = $db->prepare("UPDATE user SET anrede = ?, vorname = ?, nachname = ?, adresse = ?, plz = ?, ort = ?, email = ? WHERE uid = ?"))) {
+            $stmt->bind_param("ssssissi", $this->anrede, $this->vorname, $this->nachname, $this->adresse, $this->plz, $this->ort, $this->email, $this->uid);
+            $success = $stmt->execute();
+        }
+        $stmt->close();
+        $db->close();
+        return $success;
+    }
+
     function getUid() {
         return $this->uid;
     }

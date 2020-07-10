@@ -17,7 +17,7 @@ Whopwhop - WEB-Projekt
   - misc //Photos ohne Nutzer
 
 
-Branch-Bildverwaltung
+
 
 
 # SessionWerte:
