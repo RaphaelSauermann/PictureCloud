@@ -3,11 +3,11 @@
 function userLogin($username, $passwort) {
     $db = connectDB();
 
-    if (($stmt = $db->prepare("SELECT uid, username, passwort, isActive FROM user WHERE username = ?"))) {
+    if (($stmt = $db->prepare("SELECT uid, username, passwort, isAdmin, isActive FROM user WHERE username = ?"))) {
 
         $stmt->bind_param("s", $username);
         $stmt->execute();
-        $stmt->bind_result($db_uid, $db_username, $db_passwort, $db_isActive);
+        $stmt->bind_result($db_uid, $db_username, $db_passwort, $db_isAdmin, $db_isActive);
 
         // bekommt alle zutreffenden rows, username ist unique also kann nur max. eine row geliefert werden
         $stmt->fetch();
@@ -21,6 +21,7 @@ function userLogin($username, $passwort) {
                 $_SESSION['uid'] = $db_uid;
                 $_SESSION['username'] = $db_username;
                 $_SESSION["loginStatus"] = TRUE;
+                $_SESSION["isAdmin"] = $db_isAdmin;
             }
         } else {
             $valid = 0; // login is invalid
