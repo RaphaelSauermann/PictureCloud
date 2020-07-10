@@ -37,7 +37,6 @@ echo '</div>';
 
 
 // Input field
-
 ?>
 
 
@@ -49,5 +48,30 @@ echo '</div>';
 ?>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#sendMsg").click(function () {
+            var msg = $("#msg").val();
+            if (msg.length === 0)
+            {
+                alert("Enter a message first!");
+                return;
+            }
+            //var name = $("#name-input").val();
+            //var chat = $(".chat-box").html();
+            //$(".chat-box").html(chat + "<br /><div class='bubble'>" + msg + "</div>");
 
-        </script>
+            var data = {
+                //Name : name,
+                Message: msg
+            };
+            $.ajax({
+                type: "POST",
+                url: "inc/chat_send.php",
+
+                success: function (result) {
+                    $("#chatHistory").html(result);
+                }
+            });
+        });
+    });
+</script>

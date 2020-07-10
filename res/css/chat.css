@@ -9,7 +9,7 @@
     position: fixed;
     bottom: 23px;
     right: 28px;
-    width: 280px;
+    width: 500px;
 }
 
 /* The popup chat - hidden by default */
@@ -24,7 +24,7 @@
 
 /* Add styles to the form container */
 .chat-form-container {
-    width: 300px;
+    width: 520px;
     padding: 10px;
     background-color: white;
 }
