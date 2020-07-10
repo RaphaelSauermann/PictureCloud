@@ -52,17 +52,13 @@ $messageTitle .= '<hr>';
 
 
 
-
-
-
-
-
 <script>
     // variables to store values for chat functions
     var sender;
     var recipient;
     var senderName;
     var recipientName;
+    var workerRunning = 0;
 
     function chooseUser(myId, theirId, myUsername, theirUsername) {
         sender = myId;
@@ -73,12 +69,18 @@ $messageTitle .= '<hr>';
             // replaces content from div "chat_content" with contents from url
             type: 'POST',
             url: 'inc/chat_messages.php',
-            data: {myId: myId, theirId: theirId, myUsername: myUsername, theirUsername: theirUsername},
+            data: {myId: sender, theirId: recipient, myUsername: senderName, theirUsername: recipientName},
             success: function (result) {
                 $("#chat_content").html(result);
             }
         });
         document.getElementById("inputFields").style.display = 'block';
+        // activate Worker function for regular Updates of chat
+        if (workerRunning === 0) {
+            worker();
+            workerRunning = 1;
+        }
+
     }
 
 
@@ -89,6 +91,7 @@ $messageTitle .= '<hr>';
                 $("#chat_content").html(document.getElementById('userlist').innerHTML);
             }
         });
+        workerRunning = 0;
     }
 
     function sendMessage() {
@@ -114,14 +117,29 @@ $messageTitle .= '<hr>';
             url: "inc/chat_send.php",
             data: messageData,
             success: function (result) {
-                alert(result);
+                chooseUser(sender, recipient, senderName, recipientName);
             }
         });
     }
 
-
-
-
+    // worker function, regularly updates the chat window
+    function worker() {
+        if (workerRunning) {
+            $.ajax({
+                // replaces content from div "chat_content" with contents from url
+                type: 'POST',
+                url: 'inc/chat_messages.php',
+                data: {myId: sender, theirId: recipient, myUsername: senderName, theirUsername: recipientName},
+                success: function (result) {
+                    chooseUser(sender, recipient, senderName, recipientName);
+                },
+                complete: function () {
+                    // Schedule the next request when the current one's complete
+                    setTimeout(worker, 3000);
+                }
+            });
+        }
+    }
 
 
 
