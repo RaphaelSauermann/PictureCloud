@@ -12,8 +12,9 @@ class Bild
     private $longitude;
     private $latitude;
 
-    public function __construct($name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
+    public function __construct($bid, $name, $owner, $pfad, $aufnahmeDatum, $isPublic, $longitude, $latitude)
     {
+        $this->bid = $bid;
         $this->name = $name;
         $this->owner = $owner;
         $this->pfad = $pfad;
@@ -21,9 +22,6 @@ class Bild
         $this->isPublic = $isPublic;
         $this->longitude = $longitude;
         $this->latitude = $latitude;
-        if ($this->bid = $this->addToDB()) {
-            echo "added to DB: ".$this->bid;
-        }
     }
 
     public function addToDB()
