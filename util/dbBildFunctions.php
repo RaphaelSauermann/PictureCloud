@@ -60,6 +60,12 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         $uidGet = -1;
     }
 
+    if (array_key_exists('isAdmin', $_SESSION)) {
+        $picAdmin = $_SESSION['isAdmin'];
+    } else {
+        $picAdmin = 0;
+    }
+
     /* ##################### **/
     /** Generating SQL-Query **/
     /* ##################### **/
@@ -67,7 +73,7 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
     $whereClauses = [];
     $values = [];
     if (empty($freigabeFilterung)) {
-        return "nothing to Show";
+        return -1;
     }
     /* checking the freigabe filterungen */
     if (in_array("own", $freigabeFilterung)) {
@@ -77,9 +83,16 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
     }
     // freigegeben
     if (in_array("open", $freigabeFilterung)) {
-        // bid IN (SELECT bid FROM freigabe WHERE uid = $uidGet;
-        array_push($whereClauses, 'bid IN (SELECT bid FROM freigabe WHERE uid = ?) ');
-        array_push($values, $uidGet);
+        /* if is admin, all pictures should be shown with this option */
+        if ($picAdmin) {
+            // code...
+            array_push($whereClauses, 'owner IN (SELECT uid FROM user WHERE 1 = ?) ');
+            array_push($values, 1);
+        } else {
+            // bid IN (SELECT bid FROM freigabe WHERE uid = $uidGet;
+            array_push($whereClauses, 'bid IN (SELECT bid FROM freigabe WHERE uid = ?) ');
+            array_push($values, $uidGet);
+        }
     }
     // public
     if (in_array("public", $freigabeFilterung)) {
@@ -247,10 +260,10 @@ function deletePicture($bid)
         $path =  $row["pfad"];
     }
 
-    if(isset($path)){
-      unlink($path);
-      $sql = "DELETE FROM bild WHERE bid = ?";
-      $res = prepared_query($db, $sql, [$bid]);
+    if (isset($path)) {
+        unlink($path);
+        $sql = "DELETE FROM bild WHERE bid = ?";
+        $res = prepared_query($db, $sql, [$bid]);
     }
     $db->close();
 }
