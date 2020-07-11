@@ -63,9 +63,8 @@ if (isset($_FILES["fileToUpload"])) {
         mkdir($thumbnail_dir);
     }
     if (!file_exists($target_file)) {
-        echo "$target_file";
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "Datei wurde erfolgreich hochgeladen!";
+            echo '<div class="alert alert-info" role="alert"> Bild wurde erfolgreich hochgeladen!</div>';
             /* create Thumbnail */
             createThumbnail($target_file, $thumbnail_target, 160);
 
@@ -89,15 +88,16 @@ if (isset($_FILES["fileToUpload"])) {
                     $picName = $_FILES["fileToUpload"]["name"];
                 }
                 if ($picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude)) {
-                    echo "db eintrag war ein erfolg!";
+                  echo '<div class="alert alert-info" role="alert"> Bild wurde in der Datenbank angelegt!</div>';
                 }
             }
         } else {
-            echo "Fehler beim Upload!<br>";
+            echo '<div class="alert alert-danger" role="alert"> Fehler beim Upload ist aufgetreten!</div>';
             //Fehlerausgabe
         }
     } else {
-        echo "file already exists<br>";
+        // echo "file already exists<br>";
+        echo '<div class="alert alert-warning" role="alert">Diese Foto wurde bereits hochgeladen! Es konnte daher nicht nocheinmal gespeichert werden! </div>';
         //Fehlerausgabe
     }
     unset($_FILES["fileToUpload"]);
