@@ -50,56 +50,60 @@ if (!$_SESSION["loginStatus"]) {
 <?php
 $target_dir = $pathToPics."/".$_SESSION["uid"];
 if (isset($_FILES["fileToUpload"])) {
-    // TODO: filter so server only uploads pictures */
-    $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
+    if (isset($_FILES["fileToUpload"]["type"]) && in_array($_FILES["fileToUpload"]["type"], array("image/png", "image/jpeg", "image/gif"))) {
+        // TODO: filter so server only uploads pictures */
+        $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
 
-    // Vars for thumbnail generation
-    $thumbnail_dir = $pathToThumbnials."/".$target_dir;
-    $thumbnail_target = $pathToThumbnials."/".$target_file;
-    if (!is_dir($target_dir)) {
-        mkdir($target_dir);
-    }
-    if (!is_dir($thumbnail_dir)) {
-        mkdir($thumbnail_dir);
-    }
-    if (!file_exists($target_file)) {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo '<div class="alert alert-info" role="alert"> Bild wurde erfolgreich hochgeladen!</div>';
-            /* create Thumbnail */
-            createThumbnail($target_file, $thumbnail_target, 160);
+        // Vars for thumbnail generation
+        $thumbnail_dir = $pathToThumbnials."/".$target_dir;
+        $thumbnail_target = $pathToThumbnials."/".$target_file;
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir);
+        }
+        if (!is_dir($thumbnail_dir)) {
+            mkdir($thumbnail_dir);
+        }
+        if (!file_exists($target_file)) {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo '<div class="alert alert-info" role="alert"> Bild wurde erfolgreich hochgeladen!</div>';
+                /* create Thumbnail */
+                createThumbnail($target_file, $thumbnail_target, 160);
 
-            // Upload war erfolgreich!
-            /* Auswertung der Input-Felder um in DB zu schreiben */
-            if (isset($_POST)) {
-                $picName = $_POST["picName"];
-                //TODO SESSION User id to owners
-                $picOwner = $_SESSION["uid"];
-                $picPfad = $target_file;
-                $picAufnahmeDatum = $_POST["picTaken"];
-                if (isset($_POST["picPublic"]) && $_POST["picPublic"] == "isPublic") {
-                    $picIsPublic = 1;
-                } else {
-                    $picIsPublic = 0;
+                // Upload war erfolgreich!
+                /* Auswertung der Input-Felder um in DB zu schreiben */
+                if (isset($_POST)) {
+                    $picName = $_POST["picName"];
+                    //TODO SESSION User id to owners
+                    $picOwner = $_SESSION["uid"];
+                    $picPfad = $target_file;
+                    $picAufnahmeDatum = $_POST["picTaken"];
+                    if (isset($_POST["picPublic"]) && $_POST["picPublic"] == "isPublic") {
+                        $picIsPublic = 1;
+                    } else {
+                        $picIsPublic = 0;
+                    }
+                    $picLongitude = $_POST["picLong"];
+                    $picLatitude = $_POST["picLat"];
+                    if (($_POST["picName"] == null)) {
+                        //check if name is set if not set it to filename
+                        $picName = $_FILES["fileToUpload"]["name"];
+                    }
+                    if ($picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude)) {
+                        echo '<div class="alert alert-info" role="alert"> Bild wurde in der Datenbank angelegt!</div>';
+                    }
                 }
-                $picLongitude = $_POST["picLong"];
-                $picLatitude = $_POST["picLat"];
-                if (($_POST["picName"] == null)) {
-                    //check if name is set if not set it to filename
-                    $picName = $_FILES["fileToUpload"]["name"];
-                }
-                if ($picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude)) {
-                  echo '<div class="alert alert-info" role="alert"> Bild wurde in der Datenbank angelegt!</div>';
-                }
+            } else {
+                echo '<div class="alert alert-danger" role="alert"> Fehler beim Upload ist aufgetreten!</div>';
+                //Fehlerausgabe
             }
         } else {
-            echo '<div class="alert alert-danger" role="alert"> Fehler beim Upload ist aufgetreten!</div>';
+            // echo "file already exists<br>";
+            echo '<div class="alert alert-warning" role="alert">Diese Foto wurde bereits hochgeladen! Es konnte daher nicht nocheinmal gespeichert werden! </div>';
             //Fehlerausgabe
         }
-    } else {
-        // echo "file already exists<br>";
-        echo '<div class="alert alert-warning" role="alert">Diese Foto wurde bereits hochgeladen! Es konnte daher nicht nocheinmal gespeichert werden! </div>';
-        //Fehlerausgabe
+        unset($_FILES["fileToUpload"]);
+    }else{
+      echo '<div class="alert alert-danger" role="alert"> Ungültiges Dateiformat! Erlaubt sind .png .jpeg .gif </div>';
     }
-    unset($_FILES["fileToUpload"]);
 }
  ?>
