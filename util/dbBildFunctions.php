@@ -86,8 +86,8 @@ function getPictures($freigabeFilterung, $sortBy, $tags)
         /* if is admin, all pictures should be shown with this option */
         if ($picAdmin) {
             // code...
-            array_push($whereClauses, 'owner IN (SELECT uid FROM user WHERE 1 = ?) ');
-            array_push($values, 1);
+            array_push($whereClauses, 'owner IN (SELECT uid FROM user WHERE NOT uid = ?) ');
+            array_push($values, $uidGet);
         } else {
             // bid IN (SELECT bid FROM freigabe WHERE uid = $uidGet;
             array_push($whereClauses, 'bid IN (SELECT bid FROM freigabe WHERE uid = ?) ');
@@ -177,17 +177,12 @@ function getBildAdditonalInformation($bild)
 {
     $db = connectDB();
     /* status */
+    if ($bild->getOwner()==$_SESSION["uid"]) {
+        $werte["status"]="owner";
+    } else {
+        $werte["status"]="guest";
+    }
 
-
-    // if ($_SESSION["isAdmin"]) {
-    //     $werte["status"] = "admin";
-    // } else {
-        if ($bild->getOwner()==$_SESSION["uid"]) {
-            $werte["status"]="owner";
-        } else {
-            $werte["status"]="guest";
-        }
-    // }
 
 
     /* name */

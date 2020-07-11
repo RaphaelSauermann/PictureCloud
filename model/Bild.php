@@ -159,7 +159,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         // echo '<a href="#" class="btn-sm btn-primary">Update felder</a>';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<input type="submit" class="btn-sm btn-primary" value="Update felder" />';
             echo '<a href="index.php?page=pics&deleteBild='.$this->bid.'" class="btn-sm btn-danger">Bild löschen</a>';
         }
@@ -183,7 +183,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von TAGS -->';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<form action="index.php?page=pics" method="post">';
             echo '<div class="input-group mb-3">';
             echo '<input type="text" class="form-control" name="newTag" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">';
@@ -217,7 +217,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von Freigaben -->';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<form action="index.php?page=pics" method="post">';
             echo '<div class="input-group mb-3">';
             echo '<input type="text" class="form-control" name="newPublic" placeholder="neue Freigabe" aria-label="neuer Tag" aria-describedby="button-addon">';
