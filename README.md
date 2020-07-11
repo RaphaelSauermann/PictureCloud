@@ -29,3 +29,15 @@ Whopwhop - WEB-Projekt
 - showPicturesData
 
 Test picture map push
+
+
+# TODOs für Raphael
+
+- löschen dbBildFunctions
+- code mehr kommentieren / schöner strukturieren
+- Sicherheitslücken bei posts und gets schließen (berechtigungen)
+- Hilfe und Impressum
+- Drag and drop upload von bildern
+- Thumbnails generieren?
+
+- cleanup push test
