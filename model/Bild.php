@@ -92,7 +92,7 @@ class Bild
         echo '<div class="card" style="width: 1/3%;">';
         echo '<!-- thumbnail -->';
         echo '<a href="'.$this->pfad.'" data-fancybox="gallery" data-title="'.$this->name.'">';
-        echo '<img src="'.$this->pfad.'" class="card-img-top thumbnail" alt="">';
+        echo '<img src="thumbnails/'.$this->pfad.'" class="card-img-top thumbnail" alt="">';
         echo '</a>';
         echo '<div class="card-body">';
         // Name und Kennzeichnungen!

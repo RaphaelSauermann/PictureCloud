@@ -256,7 +256,14 @@ function deletePicture($bid)
     }
 
     if (isset($path)) {
-        unlink($path);
+        if (file_exists($path)) {
+            unlink($path);
+        }
+        //TODO: dynamicall get Path for thumbnails doesnt work for some reason;
+        $thumbnailPath ="thumbnails/".$path;
+        if (file_exists($thumbnailPath)) {
+            unlink($thumbnailPath);
+        }
         $sql = "DELETE FROM bild WHERE bid = ?";
         $res = prepared_query($db, $sql, [$bid]);
     }

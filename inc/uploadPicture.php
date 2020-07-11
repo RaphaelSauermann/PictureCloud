@@ -67,7 +67,7 @@ if (isset($_FILES["fileToUpload"])) {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "Datei wurde erfolgreich hochgeladen!";
             /* create Thumbnail */
-            make_thumb($target_file, $thumbnail_target, 120);
+            createThumbnail($target_file, $thumbnail_target, 160);
 
             // Upload war erfolgreich!
             /* Auswertung der Input-Felder um in DB zu schreiben */

@@ -221,7 +221,7 @@ if (is_array($pictures) || is_object($pictures)) {
         if ($showMap) {
             if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
                 // Add popover for picture
-                array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
+                array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"thumbnails/'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
             }
         }
         // echo "<br>";
