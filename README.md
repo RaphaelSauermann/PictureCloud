@@ -5,19 +5,18 @@ Whopwhop - WEB-Projekt
 # Dateistruktur
 
 - index.php
-- res
-	- css
-	- js
-- inc 	//"dumme" php Files
-- model	//OOP php Files
-- util  //DB-Zeugs etc
-- config
+- chats         // Speicherort für alle Userchats (JSON)
+- config        // Zugriffsdaten für Datenbank
+- inc           // php Files, welche included werden
+- model         // OOP php Files
 - pics
-  - user Accounts (nach id)
-  - misc //Photos ohne Nutzer
-
-
-
+    - user Accounts (nach id)
+    - misc //Photos ohne Nutzer
+- res
+    - css
+    - js
+- sql           // Datenbank create script
+- util          // DB Funktionen
 
 
 # SessionWerte:
@@ -29,4 +28,4 @@ Whopwhop - WEB-Projekt
 - showPicturesData
 
 
-# UserChat
+

@@ -1,12 +1,8 @@
-<?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-$userList = getAllUsers();
+<!-- creates a button at the bottom of the page for chat functionality-->
 
-// Userlist
+<?php
+// creates a List of all Users available for Chat
+$userList = getAllUsers();
 $userlist = '<div class="list-group">';
 foreach ($userList as $user) {
     // oneself is excluded from chat list
@@ -25,7 +21,7 @@ $userlist .= '</div>';
 ?>
 
 
-
+<!-- Button which opens chat window -->
 <button class="chat-open-button" onclick="openForm()">Chat</button>
 
 <div class="chat-popup" id="myForm">

@@ -1,5 +1,5 @@
 <?php
-// if error during register, sets the register tab to be active instead of login
+// if error during register, sets the register tab to be active instead of login for better usability
 $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
 ?>
 
@@ -32,8 +32,7 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
     }
     ?>
 
-
-
+    <!-- Form for Login -->
     <h2> Login </h2>
     <form action="index.php?page=account" method="POST">
 
@@ -77,7 +76,7 @@ $registerLastTab = (null !== (filter_input(INPUT_POST, "registrieren")));
     ?>
 
 
-
+    <!-- Form for Register -->
     <h2> Registrieren </h2>
     <form action="index.php?page=account" method="POST">
 

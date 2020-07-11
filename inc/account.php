@@ -1,6 +1,6 @@
 <div class="container">
     <?php
-    // these variables help to display messages at certain points
+    // these variables help to display messages at certain points for error handling
     $loginErr = FALSE;
     $userInactiveErr = FALSE;
     $userExistsErr = FALSE;

@@ -1,13 +1,4 @@
-
 <?php
-
-/*
-  echo filter_input(INPUT_GET, "myId");
-  echo filter_input(INPUT_GET, "theirId");
-  echo filter_input(INPUT_GET, "myUsername");
-  echo filter_input(INPUT_GET, "theirUsername");
- */
-
 
 /* Überschrift, "Message User "_username_" */
 $messageTitle = '<label><b>Message User <i>"' . filter_input(INPUT_POST, "theirUsername") . '"</i></b></label>';
@@ -16,7 +7,7 @@ echo $messageTitle;
 
 /* Message History */
 
-// Chats werden in JSON files gespeichert, der name des files ist immer id_id.json, wobei die niedrigere ID immer zuerst kommt
+// Chats are saved in a JSON file, name of the file is id_id.json, where the lower id is placed first
 $chat_first = min(filter_input(INPUT_POST, "myId"), filter_input(INPUT_POST, "theirId"));
 $chat_second = max(filter_input(INPUT_POST, "myId"), filter_input(INPUT_POST, "theirId"));
 $chat_filename = $chat_first . "_" . $chat_second . ".json";
