@@ -89,13 +89,14 @@ $userlist .= '</div>';
 
 
     function backToUserlist() {
+        // disables worker
+        workerRunning = 0;
         document.getElementById("inputFields").style.display = 'none';
         $.ajax({
             success: function () {
                 $("#chat_content").html(document.getElementById('userlist').innerHTML);
             }
         });
-        workerRunning = 0;
     }
 
     function sendMessage() {
@@ -138,8 +139,8 @@ $userlist .= '</div>';
                     chooseUser(sender, recipient, senderName, recipientName);
                 },
                 complete: function () {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker(), 3000);
+                    // Schedule the next request when the current one is complete
+                    setTimeout(worker, 3000);
                 }
             });
         }
