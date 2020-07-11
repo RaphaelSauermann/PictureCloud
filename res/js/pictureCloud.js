@@ -21,7 +21,3 @@ function addMarker(lat, long, text) {
     .bindPopup(text)
     .addTo(lmap);
 }
-
-/* ############# */
-/* Drag and Drop */
-/* ############# */

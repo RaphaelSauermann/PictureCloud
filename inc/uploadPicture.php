@@ -15,10 +15,6 @@ if (!$_SESSION["loginStatus"]) {
       </tr>
     </thead>
     <tbody>
-      <!-- <tr>
-      <td>Bild zum hochladen auswählen*</td>
-      <td><input type="file" name="fileToUpload" accept="image/*" required /></td>
-    </tr> -->
       <tr>
         <td><label class="button" for="fileElem">Bild zum hochladen auswählen*</label></td>
         <td><input type="file" name="fileToUpload" id="fileElem" accept="image/*" required /></td>
