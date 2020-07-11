@@ -208,11 +208,11 @@ if (array_key_exists("deleteBild", $_GET)) {
 /* list of tags that get filtered by */
 
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
+if ($showMap) {
+  include 'inc/map.php';
+  $jsAddCommandos = [];
+}
 if (is_array($pictures) || is_object($pictures)) {
-    if ($showMap) {
-        include 'inc/map.php';
-        $jsAddCommandos = [];
-    }
     $i = 0;
     echo '<div class="row">';
     foreach ($pictures as $key => $value) {
@@ -231,20 +231,20 @@ if (is_array($pictures) || is_object($pictures)) {
             echo '<div class="row">';
         }
     }
-    if ($showMap) {
-        echo '<script type="text/javascript">';
-        foreach ($jsAddCommandos as $key => $value) {
-            echo $value;
-        }
-        echo '</script>';
-    }
 } else {
-  // kein bild zum anzeigen
+    // kein bild zum anzeigen
     echo '<div class="jumbotron jumbotron-fluid">';
     echo '<div class="container">';
     echo '<h1 class="display-4">Keine Bilder zum anzeigen!</h1>';
     echo '<p class="lead">Um Bilder anzuzeigen bitte filter und Sortierungseinstellungen anpassen!</p>';
     echo '</div>';
     echo '</div>';
+}
+if ($showMap) {
+    echo '<script type="text/javascript">';
+    foreach ($jsAddCommandos as $key => $value) {
+        echo $value;
+    }
+    echo '</script>';
 }
  ?>
