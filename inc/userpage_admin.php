@@ -1,11 +1,11 @@
-
+<!-- the following is only visible to a user set to be an Admin -->
 <hr>
 
 <h3> Admin-Zone </h3>
 <h4> Userverwaltung</h4>
 
 <?php
-// changes Status to selected Value, is new Value equal to old value, no changes are made
+/* changes Status "isActive" to selected Value, is new Value equal to old value, no changes are made */
 if (null !== (filter_input(INPUT_POST, "changeStatus"))) {
     if (filter_input(INPUT_POST, "oldStatus") === filter_input(INPUT_POST, "activeStatus")) {
         echo '<p style="color:red;">UserID "' . filter_input(INPUT_POST, "userId") . '" Status unverändert.</p>';
@@ -24,9 +24,10 @@ if (null !== (filter_input(INPUT_POST, "changeStatus"))) {
 $userList = getAllUsers();
 ?>
 
-<!-- Collapsed List of all Users, shows their Pictures and can change active/inactive status -->
+<!-- Collapsed List of all Users, shows information about their Pictures and can change active/inactive status -->
 <div class="accordion" id="userverwaltung_admin">
     <?php
+    // dynamically creats cards for all users to see and edit
     foreach ($userList as $user) {
         $tempUserObject = getUserById($user);
         ?>

@@ -1,18 +1,22 @@
 <?php
 
+/* User Login function, checks if input username and password are correct */
+
 function userLogin($username, $passwort) {
     $db = connectDB();
 
+    // gets Userdata from Database 
     if (($stmt = $db->prepare("SELECT uid, username, passwort, isAdmin, isActive FROM user WHERE username = ?"))) {
 
+        // check with given username input, fields are saved with bind_result
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $stmt->bind_result($db_uid, $db_username, $db_passwort, $db_isAdmin, $db_isActive);
 
-        // bekommt alle zutreffenden rows, username ist unique also kann nur max. eine row geliefert werden
+        // gets the next row from result, username is unique therefore only one (or none) row is selected
         $stmt->fetch();
 
-        // das eingegebene PW wird mit dem Hashed PW in der DB überprüft, stimmt es überein, wird die Session auf angemeldet gesetzt.
+        // compare input password with hashed password from db, on success set Session vaiables
         if (password_verify($passwort, $db_passwort)) {
             if ($db_isActive == 0) {
                 $valid = 2; // login is valid, but user is inactive and not allowed to log in
@@ -32,7 +36,10 @@ function userLogin($username, $passwort) {
     return $valid;
 }
 
+/* User Register Function */
+
 function userRegister() {
+    // takes values from POST Form and tries to insert into DB
     $username = filter_input(INPUT_POST, "username");
     $passwort = password_hash(filter_input(INPUT_POST, "password"), PASSWORD_DEFAULT); // Hashes PW
     $anrede = filter_input(INPUT_POST, "anrede");
@@ -47,6 +54,8 @@ function userRegister() {
     $registerUser = new User(null, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, null, null);
     return $registerUser->addToDB();
 }
+
+/* checks if a Username already exists or is available */
 
 function userExists($username) {
     $db = connectDB();
@@ -68,7 +77,8 @@ function userExists($username) {
     return $exists;
 }
 
-// gets a User from DB to display information
+/* gets a User by thair ID to display information */
+
 function getUserById($userId) {
     $db = connectDB();
 
@@ -76,7 +86,7 @@ function getUserById($userId) {
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $stmt->bind_result($uid, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, $isAdmin, $isActive);
-        $stmt->fetch();
+        $stmt->fetch(); // because ID is the key, only one (or none) row can be returned
         $userObject = new User($uid, $username, $passwort, $anrede, $vorname, $nachname, $adresse, $plz, $ort, $email, $isAdmin, $isActive);
     }
     $stmt->close();
@@ -84,15 +94,16 @@ function getUserById($userId) {
     return $userObject;
 }
 
+/* gets a List with all UserIDs in DB */
+
 function getAllUsers() {
     $db = connectDB();
 
     if (($stmt = $db->prepare("SELECT uid FROM user"))) {
-
         $stmt->execute();
         $stmt->bind_result($db_uid);
 
-        // fetch() liefert beim Aufruf immer die nächste row solange es noch welche gibt
+        // on each call fetch() gets the next row from result set
         while ($stmt->fetch()) {
             $userIdList[] = $db_uid;
         }
@@ -103,9 +114,11 @@ function getAllUsers() {
     return $userIdList;
 }
 
-// Used by Admins to manage Users
+/* Used to show Admins permissions of pictures of users during user management */
+
 function getPicsFromUser($userId) {
     $db = connectDB();
+
     $pictureList = [];
     if (($stmt = $db->prepare("SELECT bid, name, isPublic FROM bild WHERE owner = ?"))) {
         $stmt->bind_param("i", $userId);
@@ -122,6 +135,8 @@ function getPicsFromUser($userId) {
     $db->close();
     return $pictureList;
 }
+
+/* Admins can set Users to be active or inactive, disabling their login */
 
 function setIsActiveStatus($userID, $newStatus) {
     $db = connectDB();
