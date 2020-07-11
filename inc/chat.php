@@ -22,8 +22,6 @@ foreach ($userList as $user) {
     }
 }
 $userlist .= '</div>';
-
-
 ?>
 
 
@@ -41,7 +39,6 @@ $userlist .= '</div>';
             </div>
         </div>
         <div id="userlist" hidden><?php echo $userlist ?></div>
-        <div id="messageTitle" hidden><?php echo $messageTitle ?></div>
         <div id="chat_content">
             <!-- creates buttons for all users, on click opens chat with user -->
             <?php echo $userlist ?>
@@ -84,8 +81,8 @@ $userlist .= '</div>';
         document.getElementById("inputFields").style.display = 'block';
         // activate Worker function for regular Updates of chat
         if (workerRunning === 0) {
-            worker();
             workerRunning = 1;
+            worker();
         }
 
     }
@@ -142,7 +139,7 @@ $userlist .= '</div>';
                 },
                 complete: function () {
                     // Schedule the next request when the current one's complete
-                    setTimeout(worker, 3000);
+                    setTimeout(worker(), 3000);
                 }
             });
         }

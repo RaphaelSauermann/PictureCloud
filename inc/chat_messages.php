@@ -20,21 +20,37 @@ echo $messageTitle;
 $chat_first = min(filter_input(INPUT_POST, "myId"), filter_input(INPUT_POST, "theirId"));
 $chat_second = max(filter_input(INPUT_POST, "myId"), filter_input(INPUT_POST, "theirId"));
 $chat_filename = $chat_first . "_" . $chat_second . ".json";
-
 $url = "../chats/" . $chat_filename;
 
+// check if file exists
 if (!file_exists($url)) {
     return;
 }
-$content = file_get_contents($url);
 
+// gets and decodes JSON contents 
+$content = file_get_contents($url);
 $werte = json_decode($content);
 
+// reads JSON Entries and prints them
 $lines = "";
 foreach ($werte as $item) {
+    if ($item->sender === filter_input(INPUT_POST, "myId")) {
+        $lines .= '<div style= "text-align:right;">';
+    } else {
+        $lines .= '<div>';
+    }
     $lines .= "<b>" . $item->senderName . "</b> ";
-    $lines .= "<i>" . $item->timestamp . "</i>: <br>";
-    $lines .= $item->message . "<br>";
+    $lines .= "<i>" . $item->timestamp . "</i> ";
+    if ($item->sender === filter_input(INPUT_POST, "myId")) {
+        if ($item->read) {
+            $lines .= "<sub>read</sub>";
+        } else {
+            $lines .= "<sub>unread</sub>";
+        }
+    }
+
+    $lines .= "<br>" . $item->message . "<br>";
+    $lines .= '</div>';
 }
 
 echo '<div disabled id="chatHistory">';
