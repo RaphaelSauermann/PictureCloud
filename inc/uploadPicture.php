@@ -50,19 +50,27 @@ if (!$_SESSION["loginStatus"]) {
 <?php
 $target_dir = $pathToPics."/".$_SESSION["uid"];
 if (isset($_FILES["fileToUpload"])) {
-    // TODO
-    /* filter so server only uploads pictures */
+    // TODO: filter so server only uploads pictures */
     $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
+
+    // Vars for thumbnail generation
+    $thumbnail_dir = $pathToThumbnials."/".$target_dir;
+    $thumbnail_target = $pathToThumbnials."/".$target_file;
     if (!is_dir($target_dir)) {
         mkdir($target_dir);
+    }
+    if (!is_dir($thumbnail_dir)) {
+        mkdir($thumbnail_dir);
     }
     if (!file_exists($target_file)) {
         echo "$target_file";
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "Datei wurde erfolgreich hochgeladen!";
-            // Upload war erfolgreich!
+            /* create Thumbnail */
+            make_thumb($target_file, $thumbnail_target, 120);
 
-            /* Auswertung der Input-Felder */
+            // Upload war erfolgreich!
+            /* Auswertung der Input-Felder um in DB zu schreiben */
             if (isset($_POST)) {
                 $picName = $_POST["picName"];
                 //TODO SESSION User id to owners
@@ -80,8 +88,8 @@ if (isset($_FILES["fileToUpload"])) {
                     //check if name is set if not set it to filename
                     $picName = $_FILES["fileToUpload"]["name"];
                 }
-                if($picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude)){
-                  echo "db eintrag war ein erfolg!";
+                if ($picId = addNewPicture($picName, $picOwner, $picPfad, $picAufnahmeDatum, $picIsPublic, $picLongitude, $picLatitude)) {
+                    echo "db eintrag war ein erfolg!";
                 }
             }
         } else {

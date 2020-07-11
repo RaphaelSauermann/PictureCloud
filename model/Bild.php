@@ -36,7 +36,12 @@ class Bild
         if (array_key_exists("isAdmin", $_SESSION)) {
             if ($_SESSION["isAdmin"]) {
                 $picAdmin = "admin";
+            }else {
+              // code...
+              $picAdmin = 0;
             }
+        }else {
+          $picAdmin = 0;
         }
 
         /* setting the visability levels (write or readable or part part)*/
