@@ -43,9 +43,9 @@ foreach ($werte as $item) {
     $lines .= "<i>" . $item->timestamp . "</i> ";
     if ($item->sender === filter_input(INPUT_POST, "myId")) {
         if ($item->read) {
-            $lines .= "<sub>read</sub>";
+            $lines .= '<sub style="color:DodgerBlue;">read</sub>';
         } else {
-            $lines .= "<sub>unread</sub>";
+            $lines .= '<sub>unread</sub>';
         }
     }
 
@@ -55,6 +55,15 @@ foreach ($werte as $item) {
 
 echo '<div disabled id="chatHistory">';
 echo $lines;
+echo '<hr>';
 echo '</div>';
 
+
+/* update 'read' status */
+foreach ($werte as $item) {
+    if ($item->sender !== filter_input(INPUT_POST, "myId") && $item->read === "0") {
+        $item->read = "1";
+    }
+}
+file_put_contents($url, json_encode($werte));
 

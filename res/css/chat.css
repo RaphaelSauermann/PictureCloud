@@ -22,6 +22,12 @@
     z-index: 9;
 }
 
+/* the window containing the chat messages*/
+#chatHistory{
+    overflow: auto;
+    max-height: 500px;
+}
+
 /* Add styles to the form container */
 .chat-form-container {
     width: 520px;

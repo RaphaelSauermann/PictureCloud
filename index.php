@@ -38,6 +38,7 @@ if (!isset($_SESSION["isAdmin"])) {
 
         <!-- JS -->
         <script type="text/javascript" src="res/js/pictureCloud.js"></script>
+        <script type="text/javascript" src="res/js/chat.js"></script>
 
 
         <!-- Lighbox -->
