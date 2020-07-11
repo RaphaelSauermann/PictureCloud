@@ -179,15 +179,15 @@ function getBildAdditonalInformation($bild)
     /* status */
 
 
-    if ($_SESSION["isAdmin"]) {
-        $werte["status"] = "admin";
-    } else {
+    // if ($_SESSION["isAdmin"]) {
+    //     $werte["status"] = "admin";
+    // } else {
         if ($bild->getOwner()==$_SESSION["uid"]) {
             $werte["status"]="owner";
         } else {
             $werte["status"]="guest";
         }
-    }
+    // }
 
 
     /* name */

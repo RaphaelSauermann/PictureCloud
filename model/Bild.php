@@ -32,30 +32,57 @@ class Bild
             $this->uploadDatum = $zusatzInfos["uploadDatum"];
         }
 
+        /* check if user is admin */
+        if (array_key_exists("isAdmin", $_SESSION)) {
+            if ($_SESSION["isAdmin"]) {
+                $picAdmin = "admin";
+            }
+        }
+
         /* setting the visability levels (write or readable or part part)*/
+        /* and Creating and Setting Badges for Quick infos */
         $visability = [];
+        $badgeHTML = "  ";
         $visability["owner"]="readonly";
         $visability["other"]="readonly";
         $visability["checkbox"]="disabled";
-        if ($zusatzInfos["status"]=="admin") {
+        //Eigenes Fremdes Bild deciding
+        if ($picAdmin) {
+            // is Admin
+            //visability of forms
             $visability["owner"]="";
             $visability["other"]="";
             $visability["checkbox"]="";
+            // Badges
+            $badgeHTML .= '<span class="badge badge-pill badge-danger">Admin</span>';
         }
         if ($zusatzInfos["status"]=="owner") {
+            // is owner
             $visability["other"]="";
             $visability["checkbox"]="";
+            $badgeHTML .= '<span class="badge badge-pill badge-info">owner</span>';
+        }
+        if ($zusatzInfos["status"]=="guest") {
+            // is guest
+            $badgeHTML .='<span class="badge badge-pill badge-secondary">Gast</span>';
+        }
+        if ($this->isPublic) {
+            $checkboxChecked = "checked";
+        } else {
+            $checkboxChecked = "";
         }
 
-        if($this->isPublic){
-          $checkboxChecked = "checked";
-        }else{
-          $checkboxChecked = "";
+        //badge GeoInoformationen
+        if ($this->latitude != 0 && $this->longitude) {
+            // Add popover for picture
+            $badgeHTML .='<span class="badge badge-pill badge-warning">mit Geo</span>';
         }
+        if ($this->isPublic) {
+            // Add popover for picture
+            $badgeHTML .='<span class="badge badge-pill badge-success">isPublic</span>';
+        }
+        //is Public
 
-
-
-        // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
         echo '<div class="container" id="bild'.$this->bid.'">';
         echo '<div class="card" style="width: 1/3%;">';
         echo '<!-- thumbnail -->';
@@ -63,6 +90,8 @@ class Bild
         echo '<img src="'.$this->pfad.'" class="card-img-top thumbnail" alt="">';
         echo '</a>';
         echo '<div class="card-body">';
+        // Name und Kennzeichnungen!
+        echo '<h5 class="card-title">'.$this->name.$badgeHTML.'</h5>';
         echo '<!-- Button zum aufklappen -->';
         echo '<a class="btn btn-outline-dark" data-toggle="collapse" href="#collapseBild'.$this->bid.'" role="button" aria-expanded="true" aria-controls="collapseExample">';
         echo '+/- Zusatzinfos';
