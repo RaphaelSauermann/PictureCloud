@@ -1,4 +1,4 @@
-
+<!-- Displays basic User information -->
 <div class="row">
     <div class="col-sm-4">
         Username
@@ -33,6 +33,7 @@
 
 
 <div class="accordion" id="profilverwaltung">
+    <!-- Form to change user information -->
     <div class="card">
         <div class="card-header" id="editUserdataLabel">
             <h5 class="mb-0">
@@ -121,7 +122,7 @@
         </div>
     </div>
 
-
+    <!-- Form to change user Password -->
     <div class="card">
         <div class="card-header" id="editPasswordLabel">
             <h5 class="mb-0">
@@ -169,6 +170,7 @@
 </div>
 
 <?php
+/* changes User login password */
 if (null !== (filter_input(INPUT_POST, "changePassword"))) {
     if (filter_input(INPUT_POST, "new_password") !== filter_input(INPUT_POST, "new_password2")) {
         echo "Die eingegebenen neuen Passwörter stimmen nicht überein.";
@@ -179,6 +181,7 @@ if (null !== (filter_input(INPUT_POST, "changePassword"))) {
     }
 }
 
+/* updates user information */
 if (null !== (filter_input(INPUT_POST, "updateUserData"))) {
     $uid = $userObject->getUid();
     $username = $userObject->getUsername();
