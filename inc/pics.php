@@ -236,7 +236,7 @@ if (is_array($pictures) || is_object($pictures)) {
     echo '<div class="jumbotron jumbotron-fluid">';
     echo '<div class="container">';
     echo '<h1 class="display-4">Keine Bilder zum anzeigen!</h1>';
-    echo '<p class="lead">Um Bilder anzuzeigen bitte filter und Sortierungseinstellungen anpassen!</p>';
+    echo '<p class="lead">Um Bilder anzuzeigen bitte Filter- und Sortierungseinstellungen anpassen!</p>';
     echo '</div>';
     echo '</div>';
 }
