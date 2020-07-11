@@ -207,29 +207,39 @@ if (array_key_exists("deleteBild", $_GET)) {
 /* Print all the pictures in the order they got delivered from the db */
 /* list of tags that get filtered by */
 
+$pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
 if ($showMap) {
   include 'inc/map.php';
   $jsAddCommandos = [];
 }
-$pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
-$i = 0;
-echo '<div class="row">';
-  foreach ($pictures as $key => $value) {
-      echo '<div class="col">';
-      $value->getHTML();
-      if ($showMap) {
-          if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
-              // Add popover for picture
-              array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
-          }
-      }
-      // echo "<br>";
-      echo "</div>";
-      if (++$i%3==0) {
-          echo "</div>";
-          echo '<div class="row">';
-      }
-  }
+if (is_array($pictures) || is_object($pictures)) {
+    $i = 0;
+    echo '<div class="row">';
+    foreach ($pictures as $key => $value) {
+        echo '<div class="col">';
+        $value->getHTML();
+        if ($showMap) {
+            if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
+                // Add popover for picture
+                array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"thumbnails/'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
+            }
+        }
+        // echo "<br>";
+        echo "</div>";
+        if (++$i%3==0) {
+            echo "</div>";
+            echo '<div class="row">';
+        }
+    }
+} else {
+    // kein bild zum anzeigen
+    echo '<div class="jumbotron jumbotron-fluid">';
+    echo '<div class="container">';
+    echo '<h1 class="display-4">Keine Bilder zum anzeigen!</h1>';
+    echo '<p class="lead">Um Bilder anzuzeigen bitte Filter- und Sortierungseinstellungen anpassen!</p>';
+    echo '</div>';
+    echo '</div>';
+}
 if ($showMap) {
     echo '<script type="text/javascript">';
     foreach ($jsAddCommandos as $key => $value) {

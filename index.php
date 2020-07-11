@@ -65,10 +65,14 @@ if (!isset($_SESSION["isAdmin"])) {
         // include 'config/fileLocations.php';
         include 'util/include.php';
 
-        /* includes for html page itself (html elements) */
 
-        include 'inc/buildHTML.php';
-        // include 'inc/addTag.php';
+  <body>
+    <?php
+      /* Model and functional includes */
+      include 'util/include.php';
+
+      /* includes for html page itself (html elements) */
+      include 'inc/buildHTML.php';
 
 
         if ($_SESSION["loginStatus"]) {
@@ -76,5 +80,6 @@ if (!isset($_SESSION["isAdmin"])) {
         }
         ?>
     </body>
+
 
 </html>

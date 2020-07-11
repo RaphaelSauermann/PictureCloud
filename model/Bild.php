@@ -32,37 +32,71 @@ class Bild
             $this->uploadDatum = $zusatzInfos["uploadDatum"];
         }
 
+        /* check if user is admin */
+        if (array_key_exists("isAdmin", $_SESSION)) {
+            if ($_SESSION["isAdmin"]) {
+                $picAdmin = "admin";
+            }else {
+              // code...
+              $picAdmin = 0;
+            }
+        }else {
+          $picAdmin = 0;
+        }
+
         /* setting the visability levels (write or readable or part part)*/
+        /* and Creating and Setting Badges for Quick infos */
         $visability = [];
+        $badgeHTML = "  ";
         $visability["owner"]="readonly";
         $visability["other"]="readonly";
         $visability["checkbox"]="disabled";
-        if ($zusatzInfos["status"]=="admin") {
+        //Eigenes Fremdes Bild deciding
+        if ($picAdmin) {
+            // is Admin
+            //visability of forms
             $visability["owner"]="";
             $visability["other"]="";
             $visability["checkbox"]="";
+            // Badges
+            $badgeHTML .= '<span class="badge badge-pill badge-danger">Admin</span>';
         }
         if ($zusatzInfos["status"]=="owner") {
+            // is owner
             $visability["other"]="";
             $visability["checkbox"]="";
+            $badgeHTML .= '<span class="badge badge-pill badge-info">owner</span>';
+        }
+        if ($zusatzInfos["status"]=="guest") {
+            // is guest
+            $badgeHTML .='<span class="badge badge-pill badge-secondary">Gast</span>';
+        }
+        if ($this->isPublic) {
+            $checkboxChecked = "checked";
+        } else {
+            $checkboxChecked = "";
         }
 
-        if($this->isPublic){
-          $checkboxChecked = "checked";
-        }else{
-          $checkboxChecked = "";
+        //badge GeoInoformationen
+        if ($this->latitude != 0 && $this->longitude) {
+            // Add popover for picture
+            $badgeHTML .='<span class="badge badge-pill badge-warning">mit Geo</span>';
         }
+        if ($this->isPublic) {
+            // Add popover for picture
+            $badgeHTML .='<span class="badge badge-pill badge-success">isPublic</span>';
+        }
+        //is Public
 
-
-
-        // Todos: get name of owner; get UpdateDatum; get Tags; get freigaben
         echo '<div class="container" id="bild'.$this->bid.'">';
         echo '<div class="card" style="width: 1/3%;">';
         echo '<!-- thumbnail -->';
         echo '<a href="'.$this->pfad.'" data-fancybox="gallery" data-title="'.$this->name.'">';
-        echo '<img src="'.$this->pfad.'" class="card-img-top thumbnail" alt="">';
+        echo '<img src="thumbnails/'.$this->pfad.'" class="card-img-top thumbnail" alt="">';
         echo '</a>';
         echo '<div class="card-body">';
+        // Name und Kennzeichnungen!
+        echo '<h5 class="card-title">'.$this->name.$badgeHTML.'</h5>';
         echo '<!-- Button zum aufklappen -->';
         echo '<a class="btn btn-outline-dark" data-toggle="collapse" href="#collapseBild'.$this->bid.'" role="button" aria-expanded="true" aria-controls="collapseExample">';
         echo '+/- Zusatzinfos';
@@ -130,7 +164,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         // echo '<a href="#" class="btn-sm btn-primary">Update felder</a>';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<input type="submit" class="btn-sm btn-primary" value="Update felder" />';
             echo '<a href="index.php?page=pics&deleteBild='.$this->bid.'" class="btn-sm btn-danger">Bild löschen</a>';
         }
@@ -154,7 +188,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von TAGS -->';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<form action="index.php?page=pics" method="post">';
             echo '<div class="input-group mb-3">';
             echo '<input type="text" class="form-control" name="newTag" placeholder="neuer Tag" aria-label="neuer Tag" aria-describedby="button-addon">';
@@ -188,7 +222,7 @@ class Bild
         echo '</div>';
         echo '</div>';
         echo '<!-- Hinzufügen von Freigaben -->';
-        if ($zusatzInfos["status"]!="guest") {
+        if ($zusatzInfos["status"]!="guest" || $picAdmin) {
             echo '<form action="index.php?page=pics" method="post">';
             echo '<div class="input-group mb-3">';
             echo '<input type="text" class="form-control" name="newPublic" placeholder="neue Freigabe" aria-label="neuer Tag" aria-describedby="button-addon">';
