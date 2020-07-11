@@ -9,14 +9,21 @@ $userList = getAllUsers();
 // Userlist
 $userlist = '<div class="list-group">';
 foreach ($userList as $user) {
-    $tempUserObject = getUserById($user);
-    $userlist .= '<button type="button" class="btn btn-light" onclick="chooseUser(' . $_SESSION['uid'] . ',' . $tempUserObject->getUid() . ',\'' . $_SESSION['username'] . '\',\'' . $tempUserObject->getUsername() . '\')">' . $tempUserObject->getUsername() . '</button>';
+    // oneself is excluded from chat list
+    if ($user !== $_SESSION['uid']) {
+        $tempUserObject = getUserById($user);
+        $userlist .= '<button type="button" class="btn btn-light" onclick="chooseUser(' . $_SESSION['uid'] . ',' . $tempUserObject->getUid() . ',\'' . $_SESSION['username'] . '\',\'' . $tempUserObject->getUsername() . '\')">' . $tempUserObject->getUsername();
+        if ($tempUserObject->getIsActive()) {
+            $userlist .= ' <i style="color:green;">active</i>';
+        } else {
+            $userlist .= ' <i style="color:red;">inactive</i>';
+        }
+        $userlist .= '</button>';
+    }
 }
 $userlist .= '</div>';
 
-// Überschrift, "Message User "_username_"
-$messageTitle = '<label for="msg"><b>Message User <i>"' . filter_input(INPUT_GET, "theirUsername") . '"</i></b></label>';
-$messageTitle .= '<hr>';
+
 ?>
 
 

@@ -64,7 +64,10 @@ if (!isset($_SESSION["isAdmin"])) {
         include 'inc/buildHTML.php';
         // include 'inc/addTag.php';
 
-        include 'inc/chat.php';
+
+        if ($_SESSION["loginStatus"]) {
+            include 'inc/chat.php';
+        }
         ?>
     </body>
 

@@ -9,6 +9,11 @@
  */
 
 
+/* Überschrift, "Message User "_username_" */
+$messageTitle = '<label><b>Message User <i>"' . filter_input(INPUT_POST, "theirUsername") . '"</i></b></label>';
+$messageTitle .= '<hr>';
+echo $messageTitle;
+
 /* Message History */
 
 // Chats werden in JSON files gespeichert, der name des files ist immer id_id.json, wobei die niedrigere ID immer zuerst kommt
@@ -17,7 +22,12 @@ $chat_second = max(filter_input(INPUT_POST, "myId"), filter_input(INPUT_POST, "t
 $chat_filename = $chat_first . "_" . $chat_second . ".json";
 
 $url = "../chats/" . $chat_filename;
+
+if (!file_exists($url)) {
+    return;
+}
 $content = file_get_contents($url);
+
 $werte = json_decode($content);
 
 $lines = "";
