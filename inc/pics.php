@@ -9,6 +9,12 @@ if (!isset($_SESSION["showPicturesData"])) {
     $_SESSION["showPicturesData"] = $filterData;
 }
 
+if (array_key_exists("toggleMap", $_GET)) {
+    $showMap = 1;
+} else {
+    $showMap = 0;
+}
+
 /* get all freigabe Choosen */
 if (isset($_GET["clearence"])) {
     // toggle the selected freigabestufe in the session array
@@ -201,12 +207,22 @@ if (array_key_exists("deleteBild", $_GET)) {
 /* Print all the pictures in the order they got delivered from the db */
 /* list of tags that get filtered by */
 
+if ($showMap) {
+  include 'inc/map.php';
+  $jsAddCommandos = [];
+}
 $pictures = getPictures($_SESSION["showPicturesData"]["freigabeFilterung"], $_SESSION["showPicturesData"]["sortBy"], $_SESSION["showPicturesData"]["tags"]);
 $i = 0;
 echo '<div class="row">';
   foreach ($pictures as $key => $value) {
       echo '<div class="col">';
       $value->getHTML();
+      if ($showMap) {
+          if ($value->getLatitude() != 0 && $value->getlongitude() != 0) {
+              // Add popover for picture
+              array_push($jsAddCommandos, 'addMarker('.$value->getLatitude().','. $value->getlongitude().',"<img class=\"popupImg\" src=\"'.$value->getPfad().'\" alt=\"\"/>'. $value->getName().'");');
+          }
+      }
       // echo "<br>";
       echo "</div>";
       if (++$i%3==0) {
@@ -214,10 +230,11 @@ echo '<div class="row">';
           echo '<div class="row">';
       }
   }
-
-
-// foreach ($_POST as $key => $value) {
-//   echo $key.": ".$value."<br>";
-// }
-
+if ($showMap) {
+    echo '<script type="text/javascript">';
+    foreach ($jsAddCommandos as $key => $value) {
+        echo $value;
+    }
+    echo '</script>';
+}
  ?>

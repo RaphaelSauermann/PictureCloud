@@ -28,4 +28,3 @@ Whopwhop - WEB-Projekt
 - showPicturesData
 
 
-

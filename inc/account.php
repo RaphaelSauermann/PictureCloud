@@ -9,7 +9,7 @@
 
     // LOGIN: check credentials for login
     if (null !== (filter_input(INPUT_POST, "anmelden"))) {
-        // Calls SELECT on users to check password 
+        // Calls SELECT on users to check password
         // 0 - false password
         // 1 - successful login
         // 2 - user inaktive, login not permitted
