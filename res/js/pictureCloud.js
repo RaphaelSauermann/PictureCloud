@@ -1,3 +1,6 @@
+/* ######### */
+/* MAP STUFF */
+/* ######### */
 var lmap;
 
 function createMap() {
@@ -14,7 +17,11 @@ function createMap() {
 function addMarker(lat, long, text) {
   // marker = new L.marker([lat, long]).addTo(lmap)
   //   .bindPopup(text);
-    marker = new L.marker([lat, long])
+  marker = new L.marker([lat, long])
     .bindPopup(text)
     .addTo(lmap);
 }
+
+/* ############# */
+/* Drag and Drop */
+/* ############# */

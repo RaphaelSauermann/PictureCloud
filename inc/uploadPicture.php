@@ -15,9 +15,13 @@ if (!$_SESSION["loginStatus"]) {
       </tr>
     </thead>
     <tbody>
+      <!-- <tr>
+      <td>Bild zum hochladen auswählen*</td>
+      <td><input type="file" name="fileToUpload" accept="image/*" required /></td>
+    </tr> -->
       <tr>
-        <td>Bild zum hochladen auswählen*</td>
-        <td><input type="file" name="fileToUpload" accept="image/*" required /></td>
+        <td><label class="button" for="fileElem">Bild zum hochladen auswählen*</label></td>
+        <td><input type="file" name="fileToUpload" id="fileElem" accept="image/*" required /></td>
       </tr>
       <tr>
         <td><label for="picPublic">Bild ist public (optional):</label></td>
@@ -50,6 +54,8 @@ if (!$_SESSION["loginStatus"]) {
 <?php
 $target_dir = $pathToPics."/".$_SESSION["uid"];
 if (isset($_FILES["fileToUpload"])) {
+    // TODO
+    /* filter so server only uploads pictures */
     $target_file = $target_dir."/".$_FILES["fileToUpload"]["name"];
     if (!is_dir($target_dir)) {
         mkdir($target_dir);
